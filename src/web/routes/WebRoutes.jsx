@@ -3,11 +3,13 @@ import { Control } from '../pages/Control'
 import { Configuration } from '../pages/Configuration'
 import { Instructions } from '../pages/Instructions'
 import { useSerial } from '../../hooks/useSerial'
+import { SerialObject } from '../../data/serialObject'
 
 
 export const WebRoutes = () => {
 
-    const serial = useSerial();
+    //const serialObject = new SerialObject()
+    const serial = new SerialObject()
 
     return (
         <Routes>

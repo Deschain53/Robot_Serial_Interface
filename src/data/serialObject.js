@@ -1,75 +1,77 @@
-    const setPort = async(port,config = { baudRate: 9600 }) => {
-    
-        if ('serial' in navigator) {
-            //try {
-              const portIntern = await navigator.serial.requestPort();
-              await portIntern.open(config);
-              const port = await portIntern;
-              const reader = port.readable.getReader();
-              const writer = port.writable.getWriter();
-              return {port, reader, writer}
-            //}
-            //catch (err) {
-            //  console.error('There was an error opening the serial port:', err);
-            //}
-          }
-          else {
-            console.error('The Web serial API doesn\'t seem to be enabled in your browser.');
-          }
-          
-    }
-    
-    const escribe = async(writer, data = "M1,-20") => {
-        try{
-            if(writer){
-                //const {writer} = port;
-    
-                const encoder = new TextEncoder();    
-                //const data = "M1,-20";    //Funcion que agarre texto 
-    
-                const dataArrayBuffer = encoder.encode(data);
-    
-                //para escribir
-            return await writer.write(dataArrayBuffer);
-            }            
-}catch(e){
-            console.log(e)
-        }
-    }
+//const setPort = async(port,config = { baudRate: 9600 }) => {
+//    
+//        if ('serial' in navigator) {
+//            //try {
+//              const portIntern = await navigator.serial.requestPort();
+//              await portIntern.open(config);
+//              const port = await portIntern;
+//              const reader = port.readable.getReader();
+//              const writer = port.writable.getWriter();
+//              return {port, reader, writer}
+//            //}
+//            //catch (err) {
+//            //  console.error('There was an error opening the serial port:', err);
+//            //}
+//          }
+//          else {
+//            console.error('The Web serial API doesn\'t seem to be enabled in your browser.');
+//          }
+//          
+//}
+//    
+//const escribe = async(writer, data = "M1,-20") => {
+//  try{
+//      if(writer){
+//          //const {writer} = port;
+//          const encoder = new TextEncoder();    
+//          //const data = "M1,-20";    //Funcion que agarre texto 
+//          const dataArrayBuffer = encoder.encode(data);
+//          //para escribir
+//      return await writer.write(dataArrayBuffer);
+//      }            
+//  }catch(e){
+//      console.log(e)
+//  }
+//}
 
 export class SerialObject{
 
-      constructor(){
-        this.port = null;
-        this.reader = null;
-        this.writer = null;
-        this.isOpen = false;
-        this.isConected = false;
-        //this.positionArray = [];
-    }
-    
+  constructor(){
+    this.port = null;
+    this.reader = null;
+    this.writer = null;
+    this.isOpen = false;
+    this.isConected = false;
+    //this.positionArray = [];
+  }
 
-    selectPort = async() => {
-    
-      if ('serial' in navigator) {
-          //try {
-            const port = await navigator.serial.requestPort();
-            await port.open({ baudRate: 9600 });
-            const reader = port.readable.getReader();
-            const writer = port.writable.getWriter();
+  resetConfiguration = () => {
+    port = null;
+    reader = null;
+    writer = null;
+    isOpen = false;
+    isConected = false;
+  } 
+
+  selectPort = async() => {
+    if ('serial' in navigator) {
+        //try {
+          const port = await navigator.serial.requestPort();
+          await port.open({ baudRate: 9600 });
+          const reader = port.readable.getReader();
+          const writer = port.writable.getWriter();
   
-              const portObject = {port, reader, writer}
-              
-              return portObject;  
-          //}
-          //catch (err) {
-          //  console.error('There was an error opening the serial port:', err);
-          //}
-        }
-        else {
-          console.error('The Web serial API doesn\'t seem to be enabled in your browser.');
-        }
-        
+            const portObject = {port, reader, writer}
+            
+            return portObject;  
+        //}
+        //catch (err) {
+        //  console.error('There was an error opening the serial port:', err);
+        //}
+      }
+      else {
+        console.error('The Web serial API doesn\'t seem to be enabled in your browser.');
+      }
   }
 
     setConfig = (portObject) => {
@@ -82,20 +84,29 @@ export class SerialObject{
       }catch(e){
         console.log(e)
       }
-
-
     }
 
     escribe = async(data = "M1,0") => {
         try{
-            if(this.port){
-                const encoder = new TextEncoder();    
-                const dataArrayBuffer = encoder.encode(data);
-            return this.writer.write(dataArrayBuffer);
-            }            
+            //if(this.writer.ready){
+              const encoder = new TextEncoder();    
+              const dataArrayBuffer = encoder.encode(data);
+              console.log('serialObject > escribe : ' + data)
+              await this.writer.write(dataArrayBuffer);//return
+            //}            
         }catch(e){
             console.log(e)
         }
+    }
+
+    escribeAsync = async(data = "") => {
+      const encoder = new TextEncoder();    
+      const dataArrayBuffer = encoder.encode(data);
+      
+      const writer = this.port.writable.getWriter();
+      await writer
+      writer.write(dataArrayBuffer);
+      return (data)
     }
 
     //lee = async() => {
@@ -118,11 +129,11 @@ export class SerialObject{
     //}
 
     mueveA = (motor = 1, value = 5) => {
-      escribe("M" + motor.toString() +","+value.toString())
+      this.escribe("M" + motor.toString() +","+value.toString())
       console.log('movido a : '+value)
     }
 
-    escribeA = () => {}
+    //escribeA = () => {}
 
 }
 

@@ -1,101 +1,106 @@
 import React, { useState } from "react";
+import { SerialObject } from "../data/serialObject";
 
-export const useSerial = () => {
+export const useSerial = (serialObject = new SerialObject()) => {
 
-//VARIABLES: // -----------------------------------------------------------------------------------------------------------
+//VARIABLES:  -----------------------------------------------------------------------------------------------------------
 
-    //Variables related to internal configuration and state of serial device:
-    //const [isConected, setConected] = useState(false);   //True para pruebas, false para produccion y uso 
-    //const [port      , setPort]   = useState(null);  
-    //const [reader    , setReader] = useState(null); 
-    //const [writer    , setWriter] = useState(null);
-    //const [isPortOpen, setPortOpen] = useState(false);
+    // Variables related to internal configuration and state of serial device:
+    //let serialObject = new SerialObject();    
+    const [isConected, setIsConected] = useState(false);   
 
-    let isConected = false
-    let port       = null
-    let reader     = null
-    let writer     = null
-    let isPortOpen = false
+    // Variables related to memory and others:
+    const [history, setHistory] = useState([]);     //Maneja el historial de comandos y posiciones
+    const [dataArray, setDataArray] = useState([]); //Establece las posiciones a enviar
 
-    //CAMBIAR USESTATE POR VARIABLES LET
-    //Variables related to memory and others:
-    const [history, setHistory] = useState([]);
+// INTERNAL METHODS: -------------------------------------------------------------------------------------------------------
 
-//INTERNAL METHODS: -------------------------------------------------------------------------------------------------------
-    const resetConfiguration = () => {
-        port       = null
-        reader     = null
-        writer     = null
-        isPortOpen = false                
-        isConected = false
-    }
-
-    //Set the variables related to configuration and state of serial device:
-    const setInternalConfiguration = async(portObject = null) => {
-        //if(portObject != null){
-            try{
-                port       = port
-                reader     = portObject.reader
-                writer     = portObject.writer
-                isPortOpen = true                
-                isConected = true
-            }catch(e){
-              console.log(e)
-            }
-        //}  
-    }
-
+    // Add new entry
     const addToHistory = (newEntry = "") => {
         setHistory(history => [...history, newEntry]);
     }
 
-//PUBLICS METHODS: --------------------------------------------------------------------------------------------------------
+    // Configure the internal array 
+    const configureDataArray = () => {
 
-    //Gives a command to device througth serial port:
-    const writeSerial = async(data = "hi") => {
-        try{
-            if(port){
-                const encoder = new TextEncoder();    
-                const dataArrayBuffer = encoder.encode(data);
-            return writer.write(dataArrayBuffer);
-            }            
-        }catch(e){
-            console.log(e)
-        }
     }
 
-    //Set internal configuration and gives the command "hi" to the device so it can detect the interface is conected:
+    // Check if serial is writtable
+    const isPortOpen = () => {
+        let isPortOpen = false;
+        if(serialObject.port.writable.locked == true){
+            isPortOpen = true;
+        }
+        //if(serialObject.)
+        return isPortOpen;
+    }
+
+    // PUBLICS METHODS: --------------------------------------------------------------------------------------------------------
+
+    // Reset the configuration
+    const resetConfiguration = () => {
+        serialObject.resetConfiguration()
+        setIsConected(false)                
+    }
+
+    // Set the variables related to configuration and state of serial device:
     const setConfiguration = async() => {
         if ("serial" in navigator) {    // The Web Serial API is supported.
-           
-            const pO = await getPortObject();
-            await setInternalConfiguration(pO);
+            const pO = await serialObject.selectPort();
+            addToHistory('Conexión iniciada...')
+            console.log('useSerial > setConfiguration', 'Conexión iniciada')
 
-            setTimeout(function(){
-                escribe("hi");  //Mesage indicate to the serial device that the interface is conected
-            },3000);
-
-            console.log('setConfiguration',pO)
-            console.log('setConfiguration','Puerto conectado')
-
-        } else {
-            console.log('Something went wrong with the conection');
+            serialObject.setConfig(pO)
+            serialObject.escribe("hi")
+            console.log('useSerial > setConfiguration', pO)
+            addToHistory('Conexión establecida')
+            setIsConected(true)
+            console.log('useSerial > setConfiguration', 'puerto abierto: '+isPortOpen())
+            console.log('useSerial > setConfiguration', 'Puerto configurado')
+            
+            console.log('useSerial > setConfiguration', serialObject)
+          } else {
+              console.log('Serial not soported')
         }
     }
 
-    //If the serial device have motors and the chip is configured correctly it will send the command to move a specific motor to a specific position
+    // Delete and set configuration
+    const deleteAndSetConfiguration = () => {
+        resetConfiguration()
+        addToHistory('Serial configuration deleted')
+        console.log('useSerial > deleteAndSetConfiguration','Serial configuration deleted')
+        setConfiguration()
+    }
+
+    // send a string througth device using serialObject
+    const writte = async(command = '') => {
+        console.log(serialObject)
+        await serialObject.escribe(command)
+        //console.log(serialObject.port)
+        //if(serialObject.port){
+        //    const encoder = new TextEncoder();    
+        //    const dataArrayBuffer = encoder.encode(command);
+        //    const writer = port.writable.getWriter();
+        //    writer.write(dataArrayBuffer);
+        //    //serialObject.escribe(command);
+        //}
+    }
+    
+    // If the serial device have motors and the chip is configured correctly it will send the command to move a specific motor to a specific position
     const moveMotorTo = (motor = 0, to = 0) => {
         if(isConected){
-            writeSerial("M"+motor.toString()+","+to.toString());
-            addToHistory("M"+motor.toString()+","+to.toString());
+            // serialObject.mueveA(motor,to)
+            writte("M"+motor.toString()+","+to.toString());
+            //addToHistory("M"+motor.toString()+","+to.toString());
         }
     }
+//
+    //const escribe = (comando = "") => {
+    //    if(isConected){
+    //        console.log(comando);
+    //    }
+    //}
 
-    const escribe = (comando = "") => {
-        if(isConected){
-            console.log(comando);
-        }
-    }
-
-    return { isConected, setConfiguration, resetConfiguration, writeSerial, moveMotorTo, escribe}
+    return { setConfiguration, resetConfiguration, deleteAndSetConfiguration,
+        writte, isConected,moveMotorTo, serialObject }
 }
