@@ -57,27 +57,22 @@ export class SerialObject{
 
     escribe = async(data = "M1,0") => {
         try{
-            //if(this.writer.ready){
-              const encoder = new TextEncoder();    
-              const dataArrayBuffer = encoder.encode(data);
-              console.log('serialObject > escribe : ' + data)
-              await this.writer.write(dataArrayBuffer);//return
-            //}            
+          //if(this.writer.ready){
+            const encoder = new TextEncoder();    
+            const dataArrayBuffer = encoder.encode(data);
+            console.log('serialObject > escribe : ' + data)
+            await this.writer.write(dataArrayBuffer);//return
+          //}            
         }catch(e){
-            console.log(e)
+          //console.log(e)
+          console.log('serialObject > escribe : ','Error - Cannot read property of null')
         }
     }
 
-    escribeAsync = async(data = "") => {
-      const encoder = new TextEncoder();    
-      const dataArrayBuffer = encoder.encode(data);
-      
-      const writer = this.port.writable.getWriter();
-      await writer
-      writer.write(dataArrayBuffer);
-      return (data)
+    mueveA = (motor = 1, value = 5) => {
+      this.escribe("M" + motor.toString() +","+value.toString())
+      console.log('movido a : '+value)
     }
-
     //lee = async() => {
     //  //Escucha informacion proveniente del dispositivo
     //  while (true) {
@@ -97,10 +92,7 @@ export class SerialObject{
     //  }
     //}
 
-    mueveA = (motor = 1, value = 5) => {
-      this.escribe("M" + motor.toString() +","+value.toString())
-      console.log('movido a : '+value)
-    }
+
 
     //escribeA = () => {}
 

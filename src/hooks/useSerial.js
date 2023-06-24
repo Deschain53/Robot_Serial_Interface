@@ -52,13 +52,13 @@ export const useSerial = (serialObject = new SerialObject()) => {
 
             serialObject.setConfig(pO)
             serialObject.escribe("hi")
-            console.log('useSerial > setConfiguration', pO)
+            //console.log('useSerial > setConfiguration', pO)
             addToHistory('Conexión establecida')
             setIsConected(true)
             console.log('useSerial > setConfiguration', 'puerto abierto: '+isPortOpen())
             console.log('useSerial > setConfiguration', 'Puerto configurado')
             
-            console.log('useSerial > setConfiguration', serialObject)
+            //console.log('useSerial > setConfiguration', serialObject)
           } else {
               console.log('Serial not soported')
         }
@@ -74,32 +74,17 @@ export const useSerial = (serialObject = new SerialObject()) => {
 
     // send a string througth device using serialObject
     const writte = async(command = '') => {
-        console.log(serialObject)
+        //console.log(serialObject)
         await serialObject.escribe(command)
-        //console.log(serialObject.port)
-        //if(serialObject.port){
-        //    const encoder = new TextEncoder();    
-        //    const dataArrayBuffer = encoder.encode(command);
-        //    const writer = port.writable.getWriter();
-        //    writer.write(dataArrayBuffer);
-        //    //serialObject.escribe(command);
-        //}
     }
     
     // If the serial device have motors and the chip is configured correctly it will send the command to move a specific motor to a specific position
     const moveMotorTo = (motor = 0, to = 0) => {
         if(isConected){
-            // serialObject.mueveA(motor,to)
-            writte("M"+motor.toString()+","+to.toString());
-            //addToHistory("M"+motor.toString()+","+to.toString());
+            writte("M"+motor.toString()+","+to.toString())
+            // Aplicar procesamiento de cadenas
         }
     }
-//
-    //const escribe = (comando = "") => {
-    //    if(isConected){
-    //        console.log(comando);
-    //    }
-    //}
 
     return { setConfiguration, resetConfiguration, deleteAndSetConfiguration,
         writte, isConected,moveMotorTo, serialObject }
