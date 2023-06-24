@@ -27,12 +27,16 @@ export const useSerial = (serialObject = new SerialObject()) => {
 
     // Check if serial is writtable
     const isPortOpen = () => {
-        let isPortOpen = false;
-        if(serialObject.port.writable.locked == true){
-            isPortOpen = true;
+        try{
+            let isPortOpen = false;
+            if(serialObject.port.writable.locked == true){
+                isPortOpen = true;
+            }
+            //if(serialObject.)
+            return isPortOpen;
+        }catch(e){
+            return false;
         }
-        //if(serialObject.)
-        return isPortOpen;
     }
 
     // PUBLICS METHODS: --------------------------------------------------------------------------------------------------------
@@ -87,5 +91,5 @@ export const useSerial = (serialObject = new SerialObject()) => {
     }
 
     return { setConfiguration, resetConfiguration, deleteAndSetConfiguration,
-        writte, isConected,moveMotorTo, serialObject }
+        writte, isConected,moveMotorTo, serialObject, isPortOpen }
 }

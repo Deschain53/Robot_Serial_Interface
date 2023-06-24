@@ -1,79 +1,68 @@
 import React, { useState } from 'react';
-import { PmodeButton } from '../components/Buttons/DevModeButton';
+import { Box, Container, Grid } from '@mui/material';
 import { WebLayout } from '../layout/WebLayout';
-import Button from '@mui/material/Button';
-import { Devmode } from '../components/Devmode/DevMode';
+import { Programer } from '../components/Devmode/Programer';
 import { useSerial } from '../../hooks/useSerial';
 import { SerialObject } from '../../data/serialObject';
 import { Controls } from '../components/Devmode/Controls/Controls';
+import { IconB } from '../components/Buttons/IconB';
+import ConnectedTvIcon from '@mui/icons-material/ConnectedTv';
+import DesktopAccessDisabledIcon from '@mui/icons-material/DesktopAccessDisabled';
+import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows';
+import scaraImg from '../../img/scara.png'
+import { scara_position_information } from '../../data/motors/scara_motors';
+import  naabImg  from '../../img/naab.jpg';
+import {naab_motors_information} from '../../data/motors/naab_motors'
 
 let serial = new SerialObject()
-
-const motorsInformation = [
-    {id: 0, text:"M0", min: -90, max: 90, default:0},
-    {id: 1, text:"M1", min: -90, max: 90, default:0},
-    {id: 2, text:"M2", min: -90, max: 90, default:-89},
-    {id: 3, text:"M3", min: -90, max: 90, default:0},
-    {id: 4, text:"M4", min: -90, max: 90, default:0},
-    {id: 5, text:"M5", min: -90, max: 90, default:0},
-    {id: 6, text:"M6", min: -90, max: 90, default:0},
-    {id: 7, text:"M7", min: -90, max: 90, default:89},
-    {id: 8, text:"M8", min: -90, max: 90, default:0},
-    {id: 9, text:"M9", min: -90, max: 90, default:0},
-    {id: 10,text:"M10", min: -90, max: 90, default:0},
-    {id: 11,text:"M11", min: -90, max: 90, default:0},
-    {id: 12,text:"M12", min: -90, max: 90, default:0},
-    {id: 13,text:"M13", min: -90, max: 90, default:0},
-    {id: 14,text:"M14", min: -80, max: 80, default:70},
-    {id: 15,text:"M15", min: 0,   max: 90, default:90},
-    {id: 16,text:"M16", min: -90, max: 90, default:0},
-    {id: 17,text:"M17", min: -80, max: 80, default:-79},
-    {id: 18,text:"M18", min: -90, max: 0, default:-89},
-    {id: 19,text:"M19 - Cabeza", min: -90, max: 90, default:0},
-]
+const motorInformation = naab_motors_information;
+const robotImg = naabImg;//scaraImg;
 
 export const Control = () => {
     const serialHook = useSerial(serial)
 
     return (
-    <>
-    <WebLayout/>
+<>
+  <WebLayout/>
+  <Container >
 
-    <div>
-      <button
-          type="submit"
-          className="btn m-1 btn-block btn-outline-primary col-sm-6"
-          onClick={ () => serialHook.setConfiguration() }
-          >Seleccionar dispositivo</button> 
-      <button
-          type="submit"
-          className="btn m-1 btn-block btn-outline-primary col-sm-6"
-          onClick={ () => serialHook.resetConfiguration() }
-          >Reset configuration</button> 
-      <button
-          type="submit"
-          className="btn m-1 btn-block btn-outline-primary col-sm-6"
-          onClick={ () => serialHook.writte("M19,+15")}
-          >+5</button>   
-      <button
-          type="submit"
-          className="btn m-1 btn-block btn-outline-primary col-sm-6"
-          onClick={ () => serialHook.writte("M19,-15")}//serialObject.mueveA(19,-5)}
-          >-5</button>                   
-    </div>
-      
-    <Controls motorsInformation={motorsInformation} writteSerial = {serialHook.moveMotorTo}/>
+    <Box component="div">
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={12} md={4} >
+          <IconB legend="Seleccionar dispositivo" Icon ={ConnectedTvIcon} action={ serialHook.setConfiguration }/>
+        </Grid>
+        <Grid item xs={12} md={4} >
+          <IconB legend="Resetear conexión" Icon ={DesktopWindowsIcon} action={ serialHook.resetConfiguration }/>
+        </Grid>
+        <Grid item xs={12} md={4} >
+        <IconB 
+          legend= {serialHook.isConected ? "Dispositivo conectado" : "Dispositivo desconectado"} 
+          Icon ={serialHook.isConected ? DesktopWindowsIcon : DesktopAccessDisabledIcon} 
+          action={ serialHook.isPortOpen }
+          />
+        </Grid>
+      </Grid>
+    </Box>
+    
+    <Box component="div">
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={12} md={6} >
+          <img src = {robotImg} className='img-fluid max-width: 50%'/>
+        </Grid>
+        <Grid item xs={12} md={6} >
+          <Controls motorsInformation={motorInformation} writteSerial = {serialHook.moveMotorTo}/>
+        </Grid>
+      </Grid>
+    </Box>
 
     <div className="container">
         <div className="row">
-            <Devmode serial = { serial }/>
+            <Programer serial = { serial }/>
         </div>
     </div>
-
-    </>
-
-        
-    )
+  </Container>
+</>
+)
 }
 
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { Typography } from '@mui/material';
 //import { useSelector } from 'react-redux';
 
 const defaultAction =  () => console.log('?')  ;
@@ -16,7 +17,9 @@ export const IconB = ({action = defaultAction ,Icon = HelpOutlineIcon, legend = 
             {
                 legend
                 ?
+                <Typography variant='h6' color='black' >
                     <div> &nbsp; {legend}</div>
+                </Typography>
                 :
                     <></>
             }

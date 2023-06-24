@@ -3,7 +3,7 @@ import { createData } from  "../../../data/dataValidators";
 import { CodeEditor } from "./CodeEditor/CodeEditor";
 import { Consola } from "./Consola/Consola";
 
-export const Devmode = ({serial}) => {
+export const Programer = ({serial}) => {
 
     const [code, setCode] = useState("//Agrega tu código aquí");
     const [consola, setConsola] = useState([createData('',">>","",0)]);
@@ -39,22 +39,6 @@ export const Devmode = ({serial}) => {
 
     return (
     <div className="container">
-
-        {/*
-            wantAuxMotors 
-            ?
-                (
-                <div className="row mt-3">
-                    <AuxMotor serial = {serial} action={agregaLineasACodigo} />
-                </div>
-                )
-            :
-            (
-                <></>
-            )
-            
-        */}
-
 
         <div className="row mt-3">
             <CodeEditor serial = {serial} actions = {actions} changeAuxMotors={changeAuxMotors} code={code} setCode={setCode}/>
