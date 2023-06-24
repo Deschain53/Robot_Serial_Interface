@@ -1,39 +1,3 @@
-//const setPort = async(port,config = { baudRate: 9600 }) => {
-//    
-//        if ('serial' in navigator) {
-//            //try {
-//              const portIntern = await navigator.serial.requestPort();
-//              await portIntern.open(config);
-//              const port = await portIntern;
-//              const reader = port.readable.getReader();
-//              const writer = port.writable.getWriter();
-//              return {port, reader, writer}
-//            //}
-//            //catch (err) {
-//            //  console.error('There was an error opening the serial port:', err);
-//            //}
-//          }
-//          else {
-//            console.error('The Web serial API doesn\'t seem to be enabled in your browser.');
-//          }
-//          
-//}
-//    
-//const escribe = async(writer, data = "M1,-20") => {
-//  try{
-//      if(writer){
-//          //const {writer} = port;
-//          const encoder = new TextEncoder();    
-//          //const data = "M1,-20";    //Funcion que agarre texto 
-//          const dataArrayBuffer = encoder.encode(data);
-//          //para escribir
-//      return await writer.write(dataArrayBuffer);
-//      }            
-//  }catch(e){
-//      console.log(e)
-//  }
-//}
-
 export class SerialObject{
 
   constructor(){
@@ -46,6 +10,11 @@ export class SerialObject{
   }
 
   resetConfiguration = () => {
+    if(port){
+      writer.releaseLock();
+      reader.releaseLock();
+      this.port.close();
+    }
     port = null;
     reader = null;
     writer = null;

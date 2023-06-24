@@ -8,14 +8,11 @@ import { SerialObject } from '../../data/serialObject'
 
 export const WebRoutes = () => {
 
-    //const serialObject = new SerialObject()
-    const serial = new SerialObject()
 
     return (
         <Routes>
-            <Route path="/"  element={<Control serial={serial}/>}/>
-            <Route path="/control"  element={<Control serial={serial}/>}/>
-            <Route path="/configuration"  element={<Configuration serial={serial}/>}/>
+            <Route path="/"  element={<Control />}/>
+            <Route path="/control"  element={<Control />}/>
             <Route path="/instructions"  element={<Instructions/>}/>
             <Route path='*' element={<Navigate to="/"/>}/>
         </Routes>

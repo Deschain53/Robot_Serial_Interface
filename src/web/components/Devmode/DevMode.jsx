@@ -2,8 +2,6 @@ import { useState } from "react";
 import { createData } from  "../../../data/dataValidators";
 import { CodeEditor } from "./CodeEditor/CodeEditor";
 import { Consola } from "./Consola/Consola";
-//import { Consola } from "./Consola/Consola.js";
-//import { AuxMotor } from "../ui/AuxMotor";
 
 export const Devmode = ({serial}) => {
 
@@ -18,14 +16,6 @@ export const Devmode = ({serial}) => {
             serial.escribe(command)
         }
     }
-     
-    //Corregir funcion **************************
-    //const lineal = (command = '', tiempo = 1000) => {
-    //    setTimeout(function(){
-    //        enviaComando()
-    //       }, tiempo);
-    //    setLineaTiempo(lineaTiempo+ tiempo,command)
-    //    }
 
     //Funcion para limpiar consola
     const limpiaConsola = () => {

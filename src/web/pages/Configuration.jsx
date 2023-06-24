@@ -3,12 +3,12 @@ import { WebLayout } from "../layout/WebLayout"
 import { SerialObject } from "../../data/serialObject";
 import { useSerial } from "../../hooks/useSerial";
 
-export const Configuration = ({serial}
+export const Configuration = ({serial},  
   ) => {
 
   const [contador, setContador] = useState(0)
 
-  const serialHelper = useSerial(serial)
+  const serialHook = useSerial(serial)
 
   return (
     <>
@@ -21,25 +21,29 @@ export const Configuration = ({serial}
             <button
                 type="submit"
                 className="btn m-1 btn-block btn-outline-primary col-sm-6"
-                onClick={ () => serialHelper.setConfiguration() }
+                onClick={ () => serialHook.setConfiguration() }
             >Seleccionar dispositivo</button> 
     </div>
     <button
         type="submit"
         className="btn m-1 btn-block btn-outline-primary col-sm-6"
-        onClick={ () => serialHelper.writte("M19,+15")}
+        onClick={ () => serialHook.writte("M19,+15")}
     >+5</button>   
     <button
         type="submit"
         className="btn m-1 btn-block btn-outline-primary col-sm-6"
-        onClick={ () => serialHelper.writte("M19,-15")}//serialObject.mueveA(19,-5)}
+        onClick={ () => serialHook.writte("M19,-15")}//serialObject.mueveA(19,-5)}
     >-5</button>   
+    <button
+      type="submit"
+      className="btn m-1 btn-block btn-outline-primary col-sm-6"
+      onClick={ () => serialHook.resetConfiguration() }
+    >Resetear configuracion</button> 
+    <button
+      type="submit"
+      className="btn m-1 btn-block btn-outline-primary col-sm-6"
+      onClick={ () => console.log(serial) }
+    >Print serial</button> 
     </>
   )
 }
-//      <button
-//        type="submit"
-//        className="btn m-1 btn-block btn-outline-primary col-sm-6"
-//        onClick={ () => serial.resetConfiguration() }
-//      >Resetear configuracion</button> 
-//    </div>
