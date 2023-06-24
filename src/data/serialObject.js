@@ -10,9 +10,9 @@ export class SerialObject{
   }
 
   resetConfiguration = () => {
-    if(port){
-      writer.releaseLock();
-      reader.releaseLock();
+    if(this.writer){
+      this.writer.releaseLock();
+      this.reader.releaseLock();
       this.port.close();
     }
     port = null;
@@ -55,13 +55,13 @@ export class SerialObject{
       }
     }
 
-    escribe = async(data = "M1,0") => {
+    escribe = (data = "M1,0") => {
         try{
           //if(this.writer.ready){
             const encoder = new TextEncoder();    
             const dataArrayBuffer = encoder.encode(data);
             console.log('serialObject > escribe : ' + data)
-            await this.writer.write(dataArrayBuffer);//return
+            this.writer.write(dataArrayBuffer);//return
           //}            
         }catch(e){
           //console.log(e)
