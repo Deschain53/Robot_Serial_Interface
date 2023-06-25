@@ -8,6 +8,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import { ComandLine } from './ComandLine';
 
+  //Se podria agregar history al commandLine component para acceder mediante 
+  //teclado a los ultimos comandos y asi dar una mejor experiencia
+  // el sobreponer ultimo comando en consola no está arreglado
 
 //Configuracion para headers de tabla
 const columns = [

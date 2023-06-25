@@ -19,11 +19,11 @@ export const useSerial = (serialObject = new SerialObject()) => {
     // Add new entry
     const addToHistory = (newEntry = "") => {
         const dataHistoryObject = createData(newEntry,">>","",0)
-        if (history == [historyDefault] ){
-            setHistory([dataHistoryObject]);
-        } else {
+        //if (history == [historyDefault] ){
+        //    setHistory([dataHistoryObject]);
+        //} else {
             setHistory(history => [...history, dataHistoryObject]); //Esta funciona
-        } 
+        //} 
     }
 
     const resetHistory = () => {
