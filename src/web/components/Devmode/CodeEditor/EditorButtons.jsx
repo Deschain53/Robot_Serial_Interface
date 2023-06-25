@@ -3,23 +3,24 @@ import React from 'react'
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import StopIcon from '@mui/icons-material/Stop';
-import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 
 import {saveAs } from "file-saver";
 import { FileUploader } from '../../Buttons/FileUploader';
 import { IconB } from '../../Buttons/IconB';
-import { useBasicActionsNaab } from '../../../../hooks/useBasicActionsNaab';
+//import { useBasicActionsNaab } from '../../../../hooks/useBasicActionsNaab';
 
+export const EditorButtons = ({
+    code="", setCode = () => {}, actionCommand = () => {} 
+  }) => {
 
-export const EditorButtons = ({code="", setCode, serial }) => {
-
-    const basicActionsRobot = useBasicActionsNaab(serial);
+    const action = actionCommand; //NO ELIMINAR: controla acciones a ejecutar
 
     const evaluaFuncion = () => {
       try{
-        console.log(code)
+        console.log('Codigo escrito: ' + code)
         eval(code);
       }catch{
         console.log('Error en evaluacion de codigo')
@@ -33,48 +34,29 @@ export const EditorButtons = ({code="", setCode, serial }) => {
       saveAs( blob,  name + '.' + extension);///.txt');
     }
 
-    const readFile = (e) => {
-      const file = e.target.files[0];
-    
-      if(!file) return;
-    
-      const fileReader = new FileReader();
-    
-      fileReader.readAsText(file);
-    
-      fileReader.onload = () => {
-        setCode(fileReader.result)
-        //console.log( fileReader.result )
-      }
-    
-      fileReader.onerror = () => {
-        console.log( fileReader.error)
-      }
-    }
-
-    const sendHomePosition = () => {
-      basicActionsRobot.home()
-    }
-
   return (
     <>
     <div className="row mx-auto">
         <div className="col"> 
-          <FileUploader handleFile = {readFile} />
-          <IconB Icon = {CreateNewFolderIcon} action = {createFile}/>
+          <FileUploader setCode = {setCode} />
+          <IconB Icon = {FileDownloadIcon} action = {createFile}/>
         </div>
-
         <div className="col">        
           <IconB Icon = {SkipPreviousIcon} />
           <IconB Icon = {PlayCircleIcon} action = {evaluaFuncion}/>
           <IconB Icon = {SkipNextIcon} />
         </div>
-
-        <div className="col"> &nbsp;&nbsp; 
+        <div className="col">        
           <IconB Icon = {StopIcon} />
-          <IconB Icon = {AccessibilityIcon} action = {sendHomePosition}/>
+          <IconB Icon = {AccessibilityIcon} action = {() => action('home')}/>
         </div>
+
      </div>
     </>
   )
 }
+
+//<div className="col"> &nbsp;&nbsp; 
+//<IconB Icon = {StopIcon} />
+//<IconB Icon = {AccessibilityIcon} action = {sendHomePosition}/>
+//</div>

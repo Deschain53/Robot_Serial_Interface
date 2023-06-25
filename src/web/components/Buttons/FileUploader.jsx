@@ -2,7 +2,7 @@ import React from 'react';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import { IconB } from './IconB';
 
-export const FileUploader = ({handleFile}) => {
+export const FileUploader = ({setCode = () => {}}) => {
     
   const hiddenFileInput = React.useRef(null);
   
@@ -10,13 +10,32 @@ export const FileUploader = ({handleFile}) => {
     hiddenFileInput.current.click();
   };
 
+  const readFile = (e) => {
+    const file = e.target.files[0];
+  
+    if(!file) return;
+  
+    const fileReader = new FileReader();
+  
+    fileReader.readAsText(file);
+  
+    fileReader.onload = () => {
+      setCode(fileReader.result)
+      //console.log( fileReader.result )
+    }
+  
+    fileReader.onerror = () => {
+      console.log('FileUploader > ', fileReader.error)
+    }
+  }
+
   return (
     <>
       <IconB Icon = {FolderOpenIcon} action = {handleClick}/>
 
       <input type="file"
              ref={hiddenFileInput}
-             onChange={handleFile}
+             onChange={readFile}
              style={{display:'none'}} 
       /> 
     </>

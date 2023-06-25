@@ -10,11 +10,9 @@ export class SerialObject{
   }
 
   resetConfiguration = () => {
-    if(this.writer){
-      this.writer.releaseLock();
-      this.reader.releaseLock();
-      this.port.close();
-    }
+    if(this.writer !== null) { this.writer.releaseLock(); }
+    if(this.reader !== null) { this.reader.releaseLock(); }
+      //this.port.close();
     port = null;
     reader = null;
     writer = null;
