@@ -1,52 +1,42 @@
 import { useState } from "react";
-import { createData } from  "../../../data/dataValidators";
 import { CodeEditor } from "./CodeEditor/CodeEditor";
 import { Consola } from "./Consola/Consola";
 
-export const Programer = ({serial}) => {
+export const Programer = ({ history, addToHistory, resetHistory, writte,}) => {
 
     const [code, setCode] = useState("//Agrega tu código aquí");
-    const [consola, setConsola] = useState([createData('',">>","",0)]);
-    const [wantAuxMotors, setWantMotors] = useState(true)
 
-    //Funcion a ejecutar cuando se ejecuta un comando
-    const enviaComando = (command = '') => {
-        console.log('Comando ' + command)
-        if(serial){
-            serial.escribe(command)
-        }
+    ////////////////
+    //Funcion a ejecutar cuando se presione el boton de enviar rutina
+    //const agregaLineasACodigo = (newcode='') => {
+    //    setCode(code + '\n' + newcode)
+    //}
+
+    //Funcion para modificar consola de acuerdo al comando ejecutado
+    const actionCommandLine = (c='') => {
+      switch (c.toLowerCase() ) {
+        case 'clear':
+          resetHistory();   //Reiniciando arreglo de consola
+          break;
+      
+        default:
+          writte(c);
+          addToHistory(c)
+          break;
+      }
     }
-
-    //Funcion para limpiar consola
-    const limpiaConsola = () => {
-        setConsola([createData('',">>","",0)]);
-    }
-
-    //Funcion para cambiar estado de auxiliarMotors
-    const changeAuxMotors = () => {
-        setWantMotors(!wantAuxMotors)
-    }
-
-    //Funcion a ejecutar cuando se presione el boton de agregar rutina
-    const agregaLineasACodigo = (newcode='') => {
-        setCode(code + '\n' + newcode)
-    }
-
-
-
-    //Funciones que podran ser ejecutadas desde el editor de código
-    const actions = [enviaComando, limpiaConsola]
 
     return (
     <div className="container">
-
-        <div className="row mt-3">
-            <CodeEditor serial = {serial} actions = {actions} changeAuxMotors={changeAuxMotors} code={code} setCode={setCode}/>
-        </div>
-    
         {<div className="row mt-2 pb-3">
-            <Consola action = {enviaComando} consola ={consola} setConsola={setConsola}/>
+            <Consola 
+                action = {actionCommandLine} 
+                history ={history}/>
         </div>}
     </div>
     )
 }
+
+//<div className="row mt-3">
+//<CodeEditor serial = {serial} actions = {actions} changeAuxMotors={changeAuxMotors} code={code} setCode={setCode}/>
+//</div>

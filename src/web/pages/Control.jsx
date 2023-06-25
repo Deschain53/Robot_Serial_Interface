@@ -21,7 +21,7 @@ const robotImg = naabImg;//scaraImg;
 export const Control = () => {
     const serialHook = useSerial(serial)
 
-    return (
+return (
 <>
   <WebLayout/>
   <Container >
@@ -57,7 +57,12 @@ export const Control = () => {
 
     <div className="container">
         <div className="row">
-            <Programer serial = { serial }/>
+            <Programer //serial = { serial }
+              history =  {serialHook.history}  
+              addToHistory =  {serialHook.addToHistory} 
+              resetHistory =  {serialHook.resetHistory}
+              writte = {serialHook.writte}
+            />
         </div>
     </div>
   </Container>

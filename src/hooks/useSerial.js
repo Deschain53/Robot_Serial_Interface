@@ -1,23 +1,33 @@
 import React, { useState } from "react";
 import { SerialObject } from "../data/serialObject";
+import { createData } from "../data/dataValidators";
 
 export const useSerial = (serialObject = new SerialObject()) => {
 
 //VARIABLES:  -----------------------------------------------------------------------------------------------------------
 
     // Variables related to internal configuration and state of serial device:
-    //let serialObject = new SerialObject();    
     const [isConected, setIsConected] = useState(false);   
 
     // Variables related to memory and others:
-    const [history, setHistory] = useState([]);     //Maneja el historial de comandos y posiciones
+    const historyDefault = createData('',">>","",0);
+    const [history, setHistory] = useState([historyDefault]);     //Maneja el historial de comandos y posiciones
     const [dataArray, setDataArray] = useState([]); //Establece las posiciones a enviar
 
 // INTERNAL METHODS: -------------------------------------------------------------------------------------------------------
 
     // Add new entry
     const addToHistory = (newEntry = "") => {
-        setHistory(history => [...history, newEntry]);
+        const dataHistoryObject = createData(newEntry,">>","",0)
+        if (history == [historyDefault] ){
+            setHistory([dataHistoryObject]);
+        } else {
+            setHistory(history => [...history, dataHistoryObject]); //Esta funciona
+        } 
+    }
+
+    const resetHistory = () => {
+        setHistory([createData('',">>","",0)])
     }
 
     // Configure the internal array 
@@ -56,13 +66,10 @@ export const useSerial = (serialObject = new SerialObject()) => {
 
             serialObject.setConfig(pO)
             serialObject.escribe("hi")
-            //console.log('useSerial > setConfiguration', pO)
             addToHistory('Conexión establecida')
             setIsConected(true)
             console.log('useSerial > setConfiguration', 'puerto abierto: '+isPortOpen())
             console.log('useSerial > setConfiguration', 'Puerto configurado')
-            
-            //console.log('useSerial > setConfiguration', serialObject)
           } else {
               console.log('Serial not soported')
         }
@@ -91,5 +98,6 @@ export const useSerial = (serialObject = new SerialObject()) => {
     }
 
     return { setConfiguration, resetConfiguration, deleteAndSetConfiguration,
-        writte, isConected,moveMotorTo, serialObject, isPortOpen }
+        writte, moveMotorTo, isPortOpen, addToHistory,resetHistory,
+        isConected, serialObject, history, }
 }

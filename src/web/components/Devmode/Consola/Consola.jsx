@@ -7,9 +7,6 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import { ComandLine } from './ComandLine';
-import { createData } from '../../../../data/dataValidators';
-//import { useSelector } from 'react-redux';
-//import { createData } from '../../../auxiliar/dataValidators';
 
 
 //Configuracion para headers de tabla
@@ -25,31 +22,7 @@ const columns = [
   { id: 'status', label: ' ', minWidth: 1 },
 ];
 
-export const Consola = ({action,consola,setConsola}) => {
-
-  //const {consola} = useSelector(state => state.dev);
-
-  
-
-  //Funcion para modificar consola de acuerdo al comando ejecutado
-  const agregaConsola = (c='') => {
-    
-    switch (c.toLowerCase() ) {
-      case 'clear':
-          setConsola([createData('',">>","",0)]);
-        break;
-    
-      default:
-        const newComandToExecute = createData(c);                 //Comando a ejecutar por consola
-        const newComandResponse = createData('Comand send', '');  //Respuesta de microcontrolador o confirmacion
-        setConsola([...consola, newComandToExecute, newComandResponse]);
-        break;
-    }
-
-
-
-
-  }
+export const Consola = ({action, history}) => {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -70,11 +43,10 @@ export const Consola = ({action,consola,setConsola}) => {
             </TableRow>
           </TableHead>
           <TableBody >
-          {consola
+          {history
               .map((row) => {
-                //console.log(row.id)
                 return (
-                  <TableRow key = {`consoleRow-${row.d}`}>  
+                  <TableRow key = {`consoleRow-${row.id}`}>  
                         <TableCell mode={undefined} key={`identacion-${row.id}`} align={"left"} style={{ width: 1 }}> {row.identacion}</TableCell>
                         <TableCell mode={undefined} key={`texto-${row.id}`} align={"left"}> {row.texto}</TableCell>
                         <TableCell mode={undefined} key={`estatus-${row.id}`} align={"left"}> {row.estatus}</TableCell>
@@ -87,14 +59,7 @@ export const Consola = ({action,consola,setConsola}) => {
         </TableContainer>        
         <ComandLine 
           action = {action}
-          agregaConsola = {agregaConsola}
         />
     </Paper>
   );
 }
-//      //<ThemeProvider theme={tema}>
-//      <ThemeProvider/>
-
-  //const tema = useDarkLightModeTheme();
-  //const  action = useActionsConsole(serial);
-  //const action = ()
