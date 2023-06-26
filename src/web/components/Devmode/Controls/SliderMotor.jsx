@@ -11,13 +11,8 @@ const Input = styled(MuiInput)`
   width: 42px;
 `;
 
-
-
 // Se pueden agregar eventor de teclado para implementar atajos y 
 // seleccionar elementos especificos
-// Por ejemplo ctrl+s+# seleccionar motor
-// + para agregar - restar 
-// agregar opcion de resetear posicion desde boton y posicion home general
 
 export const SliderMotor = ({info = {id:0,min:-90, max:90, default:0, text:""}, 
     step = 1, action = (c) => console.log(c)}) => {

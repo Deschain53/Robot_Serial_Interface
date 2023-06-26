@@ -20,7 +20,7 @@ const robotImg = naabImg;//scaraImg;
 
 export const Control = () => {
 
-  const serialHook = useSerial(serial, motorInformation, "posiciones", "")
+  const serialHook = useSerial(serial, motorInformation, "posiciones,", "")
 
 return (
 <>

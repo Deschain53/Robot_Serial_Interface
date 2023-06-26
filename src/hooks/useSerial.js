@@ -11,7 +11,7 @@ export const useSerial = (serialObject = new SerialObject(), motorInformation = 
 //VARIABLES:  -----------------------------------------------------------------------------------------------------------
 
 // Variables related to internal configuration and state of serial device:
-const [isConected, setIsConected] = useState(true);   
+const [isConected, setIsConected] = useState(false);   
 
 // Variables related to memory and others:
 const [positions, setPositions] = useState(   // Establece las posiciones a enviar
@@ -94,13 +94,6 @@ const [history, setHistory] = useState([historyDefault]);     // Maneja el histo
 
 // POSITION METHODS: --------------------------------------------------------------------------------------------------------
 
-    // Modify the positions array 
-    //const processPosition = (n,newPosition) => {
-    //    let psto = positions;
-    //    psto[n]= newPosition;
-    //    return psto;
-    //}
-
     // If the serial device have motors and the chip is configured correctly it will send the command to move a specific motor to a specific position
     const modifyPosition = (position = 0, newValue = 0) => {
         
@@ -109,7 +102,7 @@ const [history, setHistory] = useState([historyDefault]);     // Maneja el histo
             let psto = positions;
             psto[position]= newValue;
             setPositions(psto);
-            const message = prefix + "[" + psto.toString() + "]" +postfix ;
+            const message = prefix + psto.toString() +postfix ;
             writte(message);
           }
         }

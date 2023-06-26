@@ -24,7 +24,7 @@ export const Programer = ({ history, addToHistory, resetHistory, writte,}) => {
             break;
         
         case 'home':
-            writte('posiciones,0,0,-90,0,0,0,0,90,0,0,0,0,0,0,70,90,0,-80,-90,0'); //Home de Naab
+            //writte('posiciones,0,0,-90,0,0,0,0,90,0,0,0,0,0,0,70,90,0,-80,-90,0'); //Home de Naab
             addToHistory(c)
             break;    
 
