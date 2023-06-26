@@ -19,7 +19,8 @@ const motorInformation = naab_motors_information;
 const robotImg = naabImg;//scaraImg;
 
 export const Control = () => {
-    const serialHook = useSerial(serial)
+
+  const serialHook = useSerial(serial, motorInformation, "posiciones", "")
 
 return (
 <>
@@ -50,7 +51,10 @@ return (
           <img src = {robotImg} className='img-fluid max-width: 50%'/>
         </Grid>
         <Grid item xs={12} md={6} >
-          <Controls motorsInformation={motorInformation} writteSerial = {serialHook.moveMotorTo}/>
+          <Controls 
+            motorsInformation={motorInformation} 
+            writteSerial = {serialHook.modifyPosition}
+          />
         </Grid>
       </Grid>
     </Box>

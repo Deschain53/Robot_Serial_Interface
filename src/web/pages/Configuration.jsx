@@ -6,9 +6,7 @@ import { useSerial } from "../../hooks/useSerial";
 export const Configuration = ({serial},  
   ) => {
 
-  const [contador, setContador] = useState(0)
-
-  const serialHook = useSerial(serial)
+  const serialHook = useSerial(serial, [0,0,-90,0,0,0,0,90,0,0,0,0,0,90,80,90,0,-80,-90,0], "posiciones", "")
 
   return (
     <>

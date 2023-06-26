@@ -2,60 +2,25 @@ import React, { useState } from "react";
 import { SerialObject } from "../data/serialObject";
 import { createData } from "../data/dataValidators";
 
-export const useSerial = (serialObject = new SerialObject()) => {
+const historyDefault = createData('',">>","",0);
+
+
+export const useSerial = (serialObject = new SerialObject(), motorInformation = [{id: 0, text:"M0", min: -90, max: 90, default:0},],
+    prefix = "", postfix = "") => {
 
 //VARIABLES:  -----------------------------------------------------------------------------------------------------------
 
-    // Variables related to internal configuration and state of serial device:
-    const [isConected, setIsConected] = useState(false);   
+// Variables related to internal configuration and state of serial device:
+const [isConected, setIsConected] = useState(true);   
 
-    // Variables related to memory and others:
-    const historyDefault = createData('',">>","",0);
-    const [history, setHistory] = useState([historyDefault]);     //Maneja el historial de comandos y posiciones
-    const [dataArray, setDataArray] = useState([]); //Establece las posiciones a enviar
+// Variables related to memory and others:
+const [positions, setPositions] = useState(   // Establece las posiciones a enviar
+        motorInformation.map( information => information.default )
+    ); 
 
-// INTERNAL METHODS: -------------------------------------------------------------------------------------------------------
+const [history, setHistory] = useState([historyDefault]);     // Maneja el historial 
 
-    // Add new entry
-    const addToHistory = (newEntry = "") => {
-        const dataHistoryObject = createData(newEntry,">>","",0)
-        //if (history == [historyDefault] ){
-        //    setHistory([dataHistoryObject]);
-        //} else {
-            setHistory(history => [...history, dataHistoryObject]); //Esta funciona
-        //} 
-    }
-
-    const resetHistory = () => {
-        setHistory([createData('',">>","",0)])
-    }
-
-    // Configure the internal array 
-    const configureDataArray = () => {
-
-    }
-
-    // Check if serial is writtable
-    const isPortOpen = () => {
-        try{
-            let isPortOpen = false;
-            if(serialObject.port.writable.locked == true){
-                isPortOpen = true;
-            }
-            //if(serialObject.)
-            return isPortOpen;
-        }catch(e){
-            return false;
-        }
-    }
-
-    // PUBLICS METHODS: --------------------------------------------------------------------------------------------------------
-
-    // Reset the configuration
-    const resetConfiguration = () => {
-        serialObject.resetConfiguration()
-        setIsConected(false)                
-    }
+// CONFIGURATION METHODS: --------------------------------------------------------------------------------------------------------
 
     // Set the variables related to configuration and state of serial device:
     const setConfiguration = async() => {
@@ -75,6 +40,12 @@ export const useSerial = (serialObject = new SerialObject()) => {
         }
     }
 
+    // Reset the configuration
+    const resetConfiguration = () => {
+        serialObject.resetConfiguration()
+        setIsConected(false)                
+    }
+
     // Delete and set configuration
     const deleteAndSetConfiguration = () => {
         resetConfiguration()
@@ -83,21 +54,68 @@ export const useSerial = (serialObject = new SerialObject()) => {
         setConfiguration()
     }
 
-    // send a string througth device using serialObject
-    const writte = async(command = '') => {
-        //console.log(serialObject)
-        await serialObject.escribe(command)
+    // Check if serial is writtable
+    const isPortOpen = () => {
+        try{
+            let isPortOpen = false;
+            if(serialObject.port.writable.locked == true){
+                isPortOpen = true;
+            }
+            //if(serialObject.)
+            return isPortOpen;
+        }catch(e){
+            return false;
+        }
     }
-    
+
+    // Send a string througth device using serialObject
+    const writte = (command = '') => {
+        //console.log(serialObject)
+        serialObject.escribe(command)
+    }
+
+
+// MEMORY METHODS: --------------------------------------------------------------------------------------------------------
+
+    // Add new entry to history
+    const addToHistory = (newEntry = "") => {
+        const dataHistoryObject = createData(newEntry,">>","",0)
+        //if (history == [historyDefault] ){
+        //    setHistory([dataHistoryObject]);
+        //} else {
+            setHistory(history => [...history, dataHistoryObject]); //Esta funciona
+            //} 
+    }
+
+    // Reset history
+    const resetHistory = () => {
+        setHistory([createData('',">>","",0)])
+    }
+
+// POSITION METHODS: --------------------------------------------------------------------------------------------------------
+
+    // Modify the positions array 
+    //const processPosition = (n,newPosition) => {
+    //    let psto = positions;
+    //    psto[n]= newPosition;
+    //    return psto;
+    //}
+
     // If the serial device have motors and the chip is configured correctly it will send the command to move a specific motor to a specific position
-    const moveMotorTo = (motor = 0, to = 0) => {
+    const modifyPosition = (position = 0, newValue = 0) => {
+        
         if(isConected){
-            writte("M"+motor.toString()+","+to.toString())
-            // Aplicar procesamiento de cadenas
+          if ( (newValue >= motorInformation[position].min) || (newValue <= motorInformation[position].max) ){
+            let psto = positions;
+            psto[position]= newValue;
+            setPositions(psto);
+            const message = prefix + "[" + psto.toString() + "]" +postfix ;
+            writte(message);
+          }
         }
     }
 
     return { setConfiguration, resetConfiguration, deleteAndSetConfiguration,
-        writte, moveMotorTo, isPortOpen, addToHistory,resetHistory,
-        isConected, serialObject, history, }
+        isPortOpen, addToHistory,resetHistory, writte, modifyPosition,
+        isConected, serialObject, history, positions}
 }
