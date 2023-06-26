@@ -125,17 +125,26 @@ useEffect(() => {
     // If the serial device have motors and the chip is configured correctly it will send the command to move a specific motor to a specific position
     const modifyPosition = (position = 0, newValue = 0) => {
         
+        const modify = () => {
+            let psto = positions;
+            psto[position]= newValue;
+            setPositions(psto);
+            const message = prefix + psto.toString() +postfix ;
+            writte(message);
+        }
+
         if(isConected){
-            const minimo = config.information.find( info => info.id == position).min;
-            const maximo = config.information.find( info => info.id == position).max;
+            const informationMotorPosition = config.information.find( info => info.id == position)
+          if(informationMotorPosition != undefined){
+            const minimo = informationMotorPosition.min;
+            const maximo = informationMotorPosition.max;
 0
             if ( (newValue >= minimo) || (newValue <= maximo) ){
-                let psto = positions;
-                psto[position]= newValue;
-                setPositions(psto);
-                const message = prefix + psto.toString() +postfix ;
-                writte(message);
+                modify()
             }
+          } else {
+                modify()
+          }
         }
     }
 
