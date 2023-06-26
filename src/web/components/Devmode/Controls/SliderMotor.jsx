@@ -5,8 +5,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
-import Add from '@mui/icons-material/Add';
-import Remove from '@mui/icons-material/Remove';
+//import Add from '@mui/icons-material/Add';
+//import Remove from '@mui/icons-material/Remove';
 
 const Input = styled(MuiInput)`
   width: 42px;

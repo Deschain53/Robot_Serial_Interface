@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {Navigate,Route,Routes} from 'react-router-dom'
 
 // Pages: 
@@ -25,8 +25,14 @@ export const WebRoutes = () => {
         postfix: "",
     })
     
-    const serialHookParent = useSerial(serial, configuration.information, configuration.baud, configuration.prefix, configuration.postfix)
+    const serialHookParent = useSerial(serial, configuration)
     
+    useEffect(() => {
+      serialHookParent.serialHookObject.setConfig(configuration)
+      console.log('configuration: ', configuration)
+    }, [configuration])
+    
+
     return (
         <Routes>
             <Route path="/"  element={<Control configuration={configuration} serialHook={serialHookParent.serialHookObject}/>}/>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SerialObject } from "../data/serialObject";
 import { createData } from "../data/dataValidators";
 
@@ -6,23 +6,38 @@ const historyDefault = createData('',">>","",0);
 
 
 export const useSerial = (serialObject = new SerialObject(), 
-    motorsInformation = [{id: 0, text:"M0", min: -90, max: 90, default:0},],
-    baud = 9600, prefix = "", postfix = "") => {
+    configuration={ robot: 'naab', baud: 9600, information: [], prefix:"", postfix:""}
+    ) => {
 
 //VARIABLES:  -----------------------------------------------------------------------------------------------------------
+
+const [config, setConfig] = useState(configuration) // Configuracion del robot
+const {robot,baud,information:motorsInformation,prefix,postfix } = config;
 
 // Variables related to internal configuration and state of serial device:
 const [isConected, setIsConected] = useState(true);   
 
 // Variables related to positions:
 const [positions, setPositions] = useState(   // Establece las posiciones a enviar
-motorsInformation.map( information => information.default )
+    motorsInformation.map( information => information.default )
 ); 
 
 const positionsInformation = [positions, prefix, postfix]
 
 // Variables related to memory and others:
 const [history, setHistory] = useState([historyDefault]);     // Maneja el historial 
+
+useEffect(() => {
+    const newPositionInformation = config.information.map( information => information.default )
+    
+    if(robot == 'scara'){
+       setPositions(([0,0]).concat(newPositionInformation).concat([0])) 
+    } else {
+        setPositions(newPositionInformation) 
+    }
+}, [config])
+
+
 
 // CONFIGURATION METHODS: --------------------------------------------------------------------------------------------------------
 
@@ -111,18 +126,22 @@ const [history, setHistory] = useState([historyDefault]);     // Maneja el histo
     const modifyPosition = (position = 0, newValue = 0) => {
         
         if(isConected){
-          if ( (newValue >= motorsInformation[position].min) || (newValue <= motorsInformation[position].max) ){
-            let psto = positions;
-            psto[position]= newValue;
-            setPositions(psto);
-            const message = prefix + psto.toString() +postfix ;
-            writte(message);
-          }
+            const minimo = config.information.find( info => info.id == position).min;
+            const maximo = config.information.find( info => info.id == position).max;
+0
+            if ( (newValue >= minimo) || (newValue <= maximo) ){
+                let psto = positions;
+                psto[position]= newValue;
+                setPositions(psto);
+                const message = prefix + psto.toString() +postfix ;
+                writte(message);
+            }
         }
     }
 
 
     return {serialHookObject:{ setConfiguration, resetConfiguration, deleteAndSetConfiguration,
         isPortOpen, addToHistory,resetHistory, writte, modifyPosition,
-        isConected, serialObject, history, positions, positionsInformation}}
+        isConected, serialObject, history, positions, positionsInformation,
+        setConfig}}
 }

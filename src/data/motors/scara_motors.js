@@ -5,6 +5,6 @@ export const scara_position_information = [
     {id: 3, text:"Revoluta 2", min: 0, max: 330, default:0},
     {id: 4, text:"Revoluta 3", min: 0, max: 325, default:0},
     {id: 5, text:"Posición z", min: -150, max: 0, default:-150},
-    {id: 6, text:"Grippet ", min: 0, max: 70, default:0},
-    {id: 7, text:"Velocidad ", min: 0, max: 9000, default:0},
+    {id: 6, text:"Grippet ", min: 1, max: 70, default:0},
+    {id: 7, text:"Velocidad ", min: 1, max: 9000, default:0},
 ]
