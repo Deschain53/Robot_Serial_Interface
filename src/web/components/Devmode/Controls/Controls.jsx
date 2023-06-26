@@ -5,9 +5,11 @@ export const Controls = ({motorsInformation = [], writteSerial}) => {
     
     return (
     <>
+      <div>
         {motorsInformation.map(motorInformation => (
-           <SliderMotor key={motorInformation.id} info = {motorInformation} action = {writteSerial}/>
-        ))}
+          <SliderMotor key={motorInformation.id} info = {motorInformation} action = {writteSerial}/>
+          ))}
+      </div>
     </>
   )
 }

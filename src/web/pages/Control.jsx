@@ -9,6 +9,7 @@ import { IconB } from '../components/Buttons/IconB';
 import ConnectedTvIcon from '@mui/icons-material/ConnectedTv';
 import DesktopAccessDisabledIcon from '@mui/icons-material/DesktopAccessDisabled';
 import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows';
+import { ScaraAditionalControls } from '../components/Devmode/Controls/ScaraAditionalControls';
 
 export const Control = ({configuration={ robot: 'naab', baud: 9600, information: [], imgRobot}, 
   serialHook}) => {
@@ -48,6 +49,11 @@ return (
             motorsInformation={information} 
             writteSerial = {serialHook.modifyPosition}
           />
+        </Grid>
+        <Grid item xs={12} md={6} >
+          {
+            configuration.robot == "scara" ? (<ScaraAditionalControls modifyArray = {serialHook.modifyPosition}/>) : (<></>)
+          }
         </Grid>
       </Grid>
     </Box>

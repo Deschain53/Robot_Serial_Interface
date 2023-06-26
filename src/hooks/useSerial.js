@@ -5,13 +5,14 @@ import { createData } from "../data/dataValidators";
 const historyDefault = createData('',">>","",0);
 
 
-export const useSerial = (serialObject = new SerialObject(), motorsInformation = [{id: 0, text:"M0", min: -90, max: 90, default:0},],
+export const useSerial = (serialObject = new SerialObject(), 
+    motorsInformation = [{id: 0, text:"M0", min: -90, max: 90, default:0},],
     baud = 9600, prefix = "", postfix = "") => {
 
 //VARIABLES:  -----------------------------------------------------------------------------------------------------------
 
 // Variables related to internal configuration and state of serial device:
-const [isConected, setIsConected] = useState(false);   
+const [isConected, setIsConected] = useState(true);   
 
 // Variables related to positions:
 const [positions, setPositions] = useState(   // Establece las posiciones a enviar

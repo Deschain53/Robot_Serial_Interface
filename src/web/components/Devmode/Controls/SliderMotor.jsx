@@ -5,7 +5,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
-import VolumeUp from '@mui/icons-material/VolumeUp';
+import Add from '@mui/icons-material/Add';
+import Remove from '@mui/icons-material/Remove';
 
 const Input = styled(MuiInput)`
   width: 42px;
@@ -59,14 +60,12 @@ export const SliderMotor = ({info = {id:0,min:-90, max:90, default:0, text:""},
   };
 
   return (
-    <Box sx={{ width: 500 }}>
+    <Box sx={{ width: {md:400,lg:500} }}>
       <Typography id="input-slider" gutterBottom>
           {info.text}
       </Typography>
       <Grid container spacing={2} alignItems="center">
-        <Grid item>
-          <VolumeUp />
-        </Grid>
+
         <Grid item xs>
           <Slider aria-labelledby="input-slider" 
             value= {typeof value === 'number' ? value : info.default} 
@@ -77,8 +76,9 @@ export const SliderMotor = ({info = {id:0,min:-90, max:90, default:0, text:""},
         </Grid>
         <Grid item>
           <Input
+            sx={{ width: 50 }}
             value={value}
-            size="small"
+            //size="medium"
             //onChange={handleInputChange}
             //onChange={ e => console.log(e.target.value)}
             onChange={ e =>  setValue(e.target.value === '' ? '' : Number(e.target.value))} 

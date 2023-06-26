@@ -14,8 +14,8 @@ export const Configuration = ({setConfiguration = () => {}},
     prefix: "posiciones,",postfix:""}, 
   ) => {
 
-  const [robot, setRobot] = useState('');
-  const [baud, setBaud] = useState(9600);
+  const [robot, setRobot] = useState(configuration.robot);
+  const [baud, setBaud] = useState(configuration.baud);
 
   const selectRobot = [
     {value: 'naab',text:'naab'},
