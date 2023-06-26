@@ -6,6 +6,7 @@ export class SerialObject{
     this.writer = null;
     this.isOpen = false;
     this.isConected = false;
+    this.baud = 9600;
     //this.positionArray = [];
   }
 
@@ -25,11 +26,15 @@ export class SerialObject{
     }
   } 
 
+  setBaud = ( newBaud = 9600) => {
+    baud = newBaud;
+  }
+
   selectPort = async() => {
     if ('serial' in navigator) {
         //try {
           const port = await navigator.serial.requestPort();
-          await port.open({ baudRate: 9600 });
+          await port.open({ baudRate: this.baud });
           const reader = port.readable.getReader();
           const writer = port.writable.getWriter();
   

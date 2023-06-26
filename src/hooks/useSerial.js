@@ -6,7 +6,7 @@ const historyDefault = createData('',">>","",0);
 
 
 export const useSerial = (serialObject = new SerialObject(), motorsInformation = [{id: 0, text:"M0", min: -90, max: 90, default:0},],
-    prefix = "", postfix = "") => {
+    baud = 9600, prefix = "", postfix = "") => {
 
 //VARIABLES:  -----------------------------------------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ const [history, setHistory] = useState([historyDefault]);     // Maneja el histo
             addToHistory('Conexión iniciada...')
             console.log('useSerial > setConfiguration', 'Conexión iniciada')
             try{
-
+                serialObject.setBaud(baud);
                 const pO = await serialObject.selectPort();
                 
                 serialObject.setConfig(pO)

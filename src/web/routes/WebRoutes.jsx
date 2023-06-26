@@ -20,10 +20,12 @@ export const WebRoutes = () => {
         robot: 'naab',
         baud: 9600,
         information: naab_motors_information,
-        imgRobot: naabImg
+        imgRobot: naabImg,
+        prefix: "posiciones,",
+        postfix: "",
     })
     
-    const serialHookParent = useSerial(serial, configuration.information, "posiciones,", "")
+    const serialHookParent = useSerial(serial, configuration.information, configuration.baud, configuration.prefix, configuration.postfix)
     
     return (
         <Routes>
