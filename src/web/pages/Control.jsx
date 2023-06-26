@@ -6,21 +6,23 @@ import { useSerial } from '../../hooks/useSerial';
 import { SerialObject } from '../../data/serialObject';
 import { Controls } from '../components/Devmode/Controls/Controls';
 import { IconB } from '../components/Buttons/IconB';
+
 import ConnectedTvIcon from '@mui/icons-material/ConnectedTv';
 import DesktopAccessDisabledIcon from '@mui/icons-material/DesktopAccessDisabled';
 import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows';
+
 import scaraImg from '../../img/scara.png'
 import { scara_position_information } from '../../data/motors/scara_motors';
 import  naabImg  from '../../img/naab.jpg';
 import {naab_motors_information} from '../../data/motors/naab_motors'
 
 let serial = new SerialObject()
-const motorInformation = naab_motors_information;
+const motorsInformation = naab_motors_information;
 const robotImg = naabImg;//scaraImg;
 
 export const Control = () => {
 
-  const serialHook = useSerial(serial, motorInformation, "posiciones,", "")
+  const serialHook = useSerial(serial, motorsInformation, "posiciones,", "")
 
 return (
 <>
@@ -52,7 +54,7 @@ return (
         </Grid>
         <Grid item xs={12} md={6} >
           <Controls 
-            motorsInformation={motorInformation} 
+            motorsInformation={motorsInformation} 
             writteSerial = {serialHook.modifyPosition}
           />
         </Grid>
@@ -66,6 +68,7 @@ return (
               addToHistory =  {serialHook.addToHistory} 
               resetHistory =  {serialHook.resetHistory}
               writte = {serialHook.writte}
+              positionsInformation = {serialHook.positionsInformation}
             />
         </div>
     </div>

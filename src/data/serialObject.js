@@ -10,14 +10,19 @@ export class SerialObject{
   }
 
   resetConfiguration = () => {
-    if(this.writer !== null) { this.writer.releaseLock(); }
-    if(this.reader !== null) { this.reader.releaseLock(); }
+    try {
+      if(this.writer !== null) { this.writer.releaseLock(); }
+      if(this.reader !== null) { this.reader.releaseLock(); }
       //this.port.close();
-    port = null;
-    reader = null;
-    writer = null;
-    isOpen = false;
-    isConected = false;
+      port = null;
+      reader = null;
+      writer = null;
+      isOpen = false;
+      isConected = false;
+      return "Reset succesfull"
+    }catch( e) {
+      return e
+    }
   } 
 
   selectPort = async() => {

@@ -3,7 +3,8 @@ import { CodeEditor } from "./CodeEditor/CodeEditor";
 import { Consola } from "./Consola/Consola";
 import {EditorButtons} from "./CodeEditor/EditorButtons";
 
-export const Programer = ({ history, addToHistory, resetHistory, writte,}) => {
+
+export const Programer = ({ history, addToHistory, resetHistory, writte, positionsInformation,}) => {
 
     const [code, setCode] = useState("//Agrega tu código aquí");
 
@@ -42,6 +43,7 @@ export const Programer = ({ history, addToHistory, resetHistory, writte,}) => {
                 code = {code} 
                 setCode={setCode} 
                 actionCommand = {actionCommand} 
+                positionsInformation = {positionsInformation}
             />
         </div>        
         <div className="row mt-3">

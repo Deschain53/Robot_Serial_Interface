@@ -5,7 +5,7 @@ import { createData } from "../data/dataValidators";
 const historyDefault = createData('',">>","",0);
 
 
-export const useSerial = (serialObject = new SerialObject(), motorInformation = [{id: 0, text:"M0", min: -90, max: 90, default:0},],
+export const useSerial = (serialObject = new SerialObject(), motorsInformation = [{id: 0, text:"M0", min: -90, max: 90, default:0},],
     prefix = "", postfix = "") => {
 
 //VARIABLES:  -----------------------------------------------------------------------------------------------------------
@@ -13,11 +13,14 @@ export const useSerial = (serialObject = new SerialObject(), motorInformation = 
 // Variables related to internal configuration and state of serial device:
 const [isConected, setIsConected] = useState(false);   
 
-// Variables related to memory and others:
+// Variables related to positions:
 const [positions, setPositions] = useState(   // Establece las posiciones a enviar
-        motorInformation.map( information => information.default )
-    ); 
+motorsInformation.map( information => information.default )
+); 
 
+const positionsInformation = [positions, prefix, postfix]
+
+// Variables related to memory and others:
 const [history, setHistory] = useState([historyDefault]);     // Maneja el historial 
 
 // CONFIGURATION METHODS: --------------------------------------------------------------------------------------------------------
@@ -25,25 +28,34 @@ const [history, setHistory] = useState([historyDefault]);     // Maneja el histo
     // Set the variables related to configuration and state of serial device:
     const setConfiguration = async() => {
         if ("serial" in navigator) {    // The Web Serial API is supported.
-            const pO = await serialObject.selectPort();
             addToHistory('Conexión iniciada...')
             console.log('useSerial > setConfiguration', 'Conexión iniciada')
+            try{
 
-            serialObject.setConfig(pO)
-            serialObject.escribe("hi")
-            addToHistory('Conexión establecida')
-            setIsConected(true)
-            console.log('useSerial > setConfiguration', 'puerto abierto: '+isPortOpen())
-            console.log('useSerial > setConfiguration', 'Puerto configurado')
+                const pO = await serialObject.selectPort();
+                
+                serialObject.setConfig(pO)
+                serialObject.escribe("hi")
+                addToHistory('Conexión establecida')
+                setIsConected(true)
+                addToHistory('Puerto abierto')
+            }catch(e){
+                addToHistory(e)
+            }
+
           } else {
-              console.log('Serial not soported')
+            console.log('Serial not soported')
+            addToHistory('Su dispositivo o navegador no cuenta con conexión serial...')
+
         }
     }
 
     // Reset the configuration
     const resetConfiguration = () => {
-        serialObject.resetConfiguration()
-        setIsConected(false)                
+        const resetResult = serialObject.resetConfiguration()     
+        if(resetResult === "Reset succesfull") {
+            setIsConected(false)
+        }               
     }
 
     // Delete and set configuration
@@ -98,7 +110,7 @@ const [history, setHistory] = useState([historyDefault]);     // Maneja el histo
     const modifyPosition = (position = 0, newValue = 0) => {
         
         if(isConected){
-          if ( (newValue >= motorInformation[position].min) || (newValue <= motorInformation[position].max) ){
+          if ( (newValue >= motorsInformation[position].min) || (newValue <= motorsInformation[position].max) ){
             let psto = positions;
             psto[position]= newValue;
             setPositions(psto);
@@ -108,7 +120,8 @@ const [history, setHistory] = useState([historyDefault]);     // Maneja el histo
         }
     }
 
+
     return { setConfiguration, resetConfiguration, deleteAndSetConfiguration,
         isPortOpen, addToHistory,resetHistory, writte, modifyPosition,
-        isConected, serialObject, history, positions}
+        isConected, serialObject, history, positions, positionsInformation}
 }
