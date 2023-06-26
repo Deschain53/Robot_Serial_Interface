@@ -50,7 +50,7 @@ const [history, setHistory] = useState([historyDefault]);     // Maneja el histo
         }
     }
 
-    // Reset the configuration
+    // Reset the configuration - NOT WORKING
     const resetConfiguration = () => {
         const resetResult = serialObject.resetConfiguration()     
         if(resetResult === "Reset succesfull") {
@@ -121,7 +121,7 @@ const [history, setHistory] = useState([historyDefault]);     // Maneja el histo
     }
 
 
-    return { setConfiguration, resetConfiguration, deleteAndSetConfiguration,
+    return {serialHookObject:{ setConfiguration, resetConfiguration, deleteAndSetConfiguration,
         isPortOpen, addToHistory,resetHistory, writte, modifyPosition,
-        isConected, serialObject, history, positions, positionsInformation}
+        isConected, serialObject, history, positions, positionsInformation}}
 }

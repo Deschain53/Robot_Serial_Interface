@@ -1,47 +1,21 @@
-import { useState } from "react"
+import React from "react"
 import { WebLayout } from "../layout/WebLayout"
-import { SerialObject } from "../../data/serialObject";
 import { useSerial } from "../../hooks/useSerial";
+import {naab_motors_information} from '../../data/motors/naab_motors'
+import { scara_position_information } from '../../data/motors/scara_motors';
+import scaraImg from '../../img/scara.png'
+import  naabImg  from '../../img/naab.jpg';
 
-export const Configuration = ({serial},  
-  ) => {
-
-  const serialHook = useSerial(serial, [0,0,-90,0,0,0,0,90,0,0,0,0,0,90,80,90,0,-80,-90,0], "posiciones", "")
+export const Configuration = ({configuration={ robot: 'naab', baud: 9600, information: naab_motors_information, imgRobot: naabImg}, 
+  setConfiguration = () => {}}) => {
 
   return (
-    <>
+  <>
     <WebLayout/>
-
     <div>Configuracion</div>
-
     <div className="window-app">
-            <h1>Configuration</h1>     
-            <button
-                type="submit"
-                className="btn m-1 btn-block btn-outline-primary col-sm-6"
-                onClick={ () => serialHook.setConfiguration() }
-            >Seleccionar dispositivo</button> 
+      <h1>Configuration</h1>     
     </div>
-    <button
-        type="submit"
-        className="btn m-1 btn-block btn-outline-primary col-sm-6"
-        onClick={ () => serialHook.writte("M19,+15")}
-    >+5</button>   
-    <button
-        type="submit"
-        className="btn m-1 btn-block btn-outline-primary col-sm-6"
-        onClick={ () => serialHook.writte("M19,-15")}//serialObject.mueveA(19,-5)}
-    >-5</button>   
-    <button
-      type="submit"
-      className="btn m-1 btn-block btn-outline-primary col-sm-6"
-      onClick={ () => serialHook.resetConfiguration() }
-    >Resetear configuracion</button> 
-    <button
-      type="submit"
-      className="btn m-1 btn-block btn-outline-primary col-sm-6"
-      onClick={ () => console.log(serial) }
-    >Print serial</button> 
-    </>
+  </>
   )
 }
