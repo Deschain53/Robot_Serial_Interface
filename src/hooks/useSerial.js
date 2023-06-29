@@ -12,7 +12,7 @@ export const useSerial = (serialObject = new SerialObject(),
 //VARIABLES:  -----------------------------------------------------------------------------------------------------------
 
 const [config, setConfig] = useState(configuration) // Configuracion del robot
-const {robot,baud,information:motorsInformation,prefix,postfix } = config;
+const {robot,baud,information:motorsInformation } = config;
 
 // Variables related to internal configuration and state of serial device:
 const [isConected, setIsConected] = useState(true);   
@@ -22,6 +22,8 @@ const [positions, setPositions] = useState(   // Establece las posiciones a envi
     motorsInformation.map( information => information.default )
 ); 
 
+const prefix = config.prefix;
+const postfix = config.postfix;
 const positionsInformation = [positions, prefix, postfix]
 
 // Variables related to memory and others:
@@ -35,6 +37,8 @@ useEffect(() => {
     } else {
         setPositions(newPositionInformation) 
     }
+
+    
 }, [config])
 
 
@@ -125,6 +129,8 @@ useEffect(() => {
     // If the serial device have motors and the chip is configured correctly it will send the command to move a specific motor to a specific position
     const modifyPosition = (position = 0, newValue = 0) => {
         
+        console.log('ModifyPosition, baud: ' + serialObject.baud)
+
         const modify = () => {
             let psto = positions;
             psto[position]= newValue;

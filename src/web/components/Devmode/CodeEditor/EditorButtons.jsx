@@ -34,7 +34,8 @@ export const EditorButtons = ({
 
     // Manda el array de posiciones de useSerial al editor
     const sendPositionsToEditor = () => {
-      const newCommand = 'action(\''+'posiciones,'+positions.toString()+'\')';
+      const newCommand = 'action(\''+
+      prefix+positions.toString()+ postfix+ '\')';
       const newcode = 'setTimeout(function(){\n' +'\t' + newCommand + '\n}, '+ contador + '); \n'
       setContador(contador + 500);
       setCode(code + '\n' + newcode);
