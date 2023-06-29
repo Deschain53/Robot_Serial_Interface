@@ -20,18 +20,6 @@ export const SliderMotor = ({info = {id:0,min:-90, max:90, default:0, text:""},
 
   const [value, setValue] = useState(info.default);
   const [isFirstRender, setIsFirstRender] = useState(true);
-    //const handleSliderChange = (event, newValue) => {
-    //  if (newValue < info.min) {
-    //    setValue(info.min);
-    //  } else if (newValue > info.max) {
-    //    setValue(info.max);
-    //  } else{
-    //    setValue(newValue);
-    //  }
-    //    //action(info.id,value)
-    //    console.log('value', value)
-    //};
-
 
     useEffect(() => {
       if(!isFirstRender) 
@@ -42,13 +30,6 @@ export const SliderMotor = ({info = {id:0,min:-90, max:90, default:0, text:""},
       setIsFirstRender(false)
     }, [])
     
-
-  //const handleInputChange = (event) => {
-  //  const newValue = event.target.value
-  //  console.log(newValue)
-  //  setValue(newValue === '' ? '' : Number(newValue));
-  //};
-
   const handleBlur = () => {
     if (value < info.min) {
       setValue(info.min);
@@ -69,8 +50,6 @@ export const SliderMotor = ({info = {id:0,min:-90, max:90, default:0, text:""},
         <Grid item xs>
           <Slider aria-labelledby="input-slider" 
             value= {typeof value === 'number' ? value : info.default} 
-            //onChange={handleSliderChange} 
-            //onChange={ e => console.log(e.target.value)}
             onChange={ e =>  setValue(e.target.value === '' ? '' : Number(e.target.value))} 
             defaultValue={info.default} min={info.min} max = {info.max}/>
         </Grid>
@@ -78,9 +57,6 @@ export const SliderMotor = ({info = {id:0,min:-90, max:90, default:0, text:""},
           <Input
             sx={{ width: 50 }}
             value={value}
-            //size="medium"
-            //onChange={handleInputChange}
-            //onChange={ e => console.log(e.target.value)}
             onChange={ e =>  setValue(e.target.value === '' ? '' : Number(e.target.value))} 
             onBlur={handleBlur}
             inputProps={{

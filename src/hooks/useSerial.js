@@ -15,13 +15,15 @@ const [config, setConfig] = useState(configuration) // Configuracion del robot
 const {robot,baud,information:motorsInformation } = config;
 
 // Variables related to internal configuration and state of serial device:
-const [isConected, setIsConected] = useState(true);   
+const [isConected, setIsConected] = useState(false);   
 
 // Variables related to positions:
 const [positions, setPositions] = useState(   // Establece las posiciones a enviar
     motorsInformation.map( information => information.default )
 ); 
 
+//const [direct, setDirect] = useState({x:0,y:0,z:0})
+ 
 const prefix = config.prefix;
 const postfix = config.postfix;
 const positionsInformation = [positions, prefix, postfix]
@@ -29,6 +31,7 @@ const positionsInformation = [positions, prefix, postfix]
 // Variables related to memory and others:
 const [history, setHistory] = useState([historyDefault]);     // Maneja el historial 
 
+// use effect configuration
 useEffect(() => {
     const newPositionInformation = config.information.map( information => information.default )
     
@@ -38,9 +41,12 @@ useEffect(() => {
         setPositions(newPositionInformation) 
     }
 
-    
 }, [config])
 
+//// use effect positions
+//useEffect(() => {
+//  calculaCinemáticaDirectaScara
+//}, [positions])
 
 
 // CONFIGURATION METHODS: --------------------------------------------------------------------------------------------------------
@@ -145,7 +151,7 @@ useEffect(() => {
           if(informationMotorPosition != undefined){
             const minimo = informationMotorPosition.min;
             const maximo = informationMotorPosition.max;
-0
+
             if ( (newValue >= minimo) || (newValue <= maximo) ){
                 modify()
             }
@@ -155,9 +161,22 @@ useEffect(() => {
         }
     }
 
+      //const calculaCinemáticaDirectaScara = () => {
+      //  const l1 = 20
+      //  const l2 = 8
+      //  const theta1 = positions[2]
+      //  const theta2 = positions[3]
+      //  const theta1F = theta1*(Math.PI/180)
+      //  const theta2F = theta2*(Math.PI/180)
+      //  const xP = Math.round( l1*Math.cos(theta1F) + l2*Math.cos(theta1F+theta2F) )
+      //  const yP = Math.round( l1*Math.sin(theta1F) + l2*Math.sin(theta1F+theta2F) )
+      //
+      //  return {xP,yP}
+      //}
+
 
     return {serialHookObject:{ setConfiguration, resetConfiguration, deleteAndSetConfiguration,
         isPortOpen, addToHistory,resetHistory, writte, modifyPosition,
         isConected, serialObject, history, positions, positionsInformation,
-        setConfig}}
+        setConfig, }}
 }

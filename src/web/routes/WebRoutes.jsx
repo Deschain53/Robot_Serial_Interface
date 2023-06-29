@@ -22,7 +22,7 @@ const defaultConfiguration = {
     baud: 1200,
     information: scara_position_information,
     imgRobot: scaraImg,
-    prefix: ",",
+    prefix: "",
     postfix: "",
     //robot: 'naab',
     //baud: 9600,

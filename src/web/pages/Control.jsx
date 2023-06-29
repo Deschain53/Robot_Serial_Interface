@@ -15,7 +15,9 @@ import { InverseCinematicScara } from '../components/Devmode/Controls/InverseCin
 export const Control = ({configuration={ robot: 'naab', baud: 9600, information: [], imgRobot}, 
   serialHook}) => {
 
-  const {baud, information, imgRobot} = configuration;
+  const {baud, information, imgRobot, robot} = configuration;
+
+  //console.log(serialHook.positionsInformation)
 
 return (
 <>
@@ -45,22 +47,25 @@ return (
         <Grid item xs={12} md={6} >
           <img src = {imgRobot} className='img-fluid max-width: 50%'/>
         </Grid>
-        <Grid item xs={12} md={6} >
-          <Controls 
+        <Grid item xs={12} md={6} sx={{tb:5}}>
+          <Controls
+            robot = {robot}
             motorsInformation={information} 
             writteSerial = {serialHook.modifyPosition}
-          />
+            />
         </Grid>
-        <Grid item xs={12} md={6} >
           {
             configuration.robot == "scara" ? (
-              <Grid item xs={6} md={6} >
-                <ScaraAditionalControls modifyArray = {serialHook.modifyPosition}/>
-                <InverseCinematicScara/>
+              <Grid container sx={{tb:5}}>
+                <Grid item xs={6} md={6} >
+                  <ScaraAditionalControls modifyArray = {serialHook.modifyPosition}/>
+                </Grid>
+                <Grid item xs={6} md={6} >
+                  <InverseCinematicScara modifyArray = {serialHook.modifyPosition}/>
+                </Grid>
               </Grid>
-              ) : (<></>)
+            ) : (<></>)
           }
-        </Grid>
       </Grid>
     </Box>
 

@@ -59,7 +59,7 @@ export const Configuration = ({setConfiguration = () => {}},
   }
 
   const prefixNew =  robot === "naab" ? "posiciones," : "";
-  const postfixNew =  robot === "naab" ? "" : "";
+  const postfixNew =  robot === "naab" ? "[" : "";
 
   const handleClick = () => {
     setConfiguration(
