@@ -10,6 +10,7 @@ import ConnectedTvIcon from '@mui/icons-material/ConnectedTv';
 import DesktopAccessDisabledIcon from '@mui/icons-material/DesktopAccessDisabled';
 import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows';
 import { ScaraAditionalControls } from '../components/Devmode/Controls/ScaraAditionalControls';
+import { InverseCinematicScara } from '../components/Devmode/Controls/InverseCinematicScara';
 
 export const Control = ({configuration={ robot: 'naab', baud: 9600, information: [], imgRobot}, 
   serialHook}) => {
@@ -52,7 +53,12 @@ return (
         </Grid>
         <Grid item xs={12} md={6} >
           {
-            configuration.robot == "scara" ? (<ScaraAditionalControls modifyArray = {serialHook.modifyPosition}/>) : (<></>)
+            configuration.robot == "scara" ? (
+              <Grid item xs={6} md={6} >
+                <ScaraAditionalControls modifyArray = {serialHook.modifyPosition}/>
+                <InverseCinematicScara/>
+              </Grid>
+              ) : (<></>)
           }
         </Grid>
       </Grid>
