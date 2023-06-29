@@ -10,20 +10,31 @@ import { Instructions } from '../pages/Instructions'
 import { useSerial } from '../../hooks/useSerial';
 import { SerialObject } from '../../data/serialObject';
 import {naab_motors_information} from '../../data/motors/naab_motors'
+import { scara_position_information } from '../../data/motors/scara_motors'
 import  naabImg  from '../../img/naab.jpg';
+import  scaraImg  from '../../img/scara.png';
 
 let serial = new SerialObject()
 
+
+const defaultConfiguration = {
+    robot: 'scara',
+    baud: 1200,
+    information: scara_position_information,
+    imgRobot: scaraImg,
+    prefix: ",",
+    postfix: "",
+    //robot: 'naab',
+    //baud: 9600,
+    //information: naab_motors_information,
+    //imgRobot: naabImg,
+    //prefix: "posiciones,",
+    //postfix: "",
+}
+
 export const WebRoutes = () => {
     
-    const [configuration, setConfig] = useState({
-        robot: 'naab',
-        baud: 9600,
-        information: naab_motors_information,
-        imgRobot: naabImg,
-        prefix: "posiciones,",
-        postfix: "",
-    })
+    const [configuration, setConfig] = useState(defaultConfiguration)
     
     const serialHookParent = useSerial(serial, configuration)
     

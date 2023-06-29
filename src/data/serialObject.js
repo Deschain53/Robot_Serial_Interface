@@ -27,7 +27,7 @@ export class SerialObject{
   } 
 
   setBaud = ( newBaud = 9600) => {
-    baud = newBaud;
+    this.baud = newBaud;
   }
 
   selectPort = async() => {

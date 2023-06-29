@@ -65,7 +65,7 @@ export const Configuration = ({setConfiguration = () => {}},
     setConfiguration(
       {
         robot, 
-        baud,
+        baud: baud,
         information: getInformation(),
         imgRobot: getImg(),
         prefix: prefixNew,

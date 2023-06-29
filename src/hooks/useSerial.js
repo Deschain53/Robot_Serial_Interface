@@ -111,12 +111,13 @@ useEffect(() => {
 
     // Add new entry to history
     const addToHistory = (newEntry = "") => {
-        const dataHistoryObject = createData(newEntry,">>","",0)
-        //if (history == [historyDefault] ){
-        //    setHistory([dataHistoryObject]);
-        //} else {
-            setHistory(history => [...history, dataHistoryObject]); //Esta funciona
-            //} 
+        let dataHistoryObject
+        if(typeof(newEntry)  === "string") {
+            dataHistoryObject = createData(newEntry,">>","",0)
+        } else {
+            dataHistoryObject = createData("No se pudo realizar la acción",">>","",0)
+        }
+        setHistory(history => [...history, dataHistoryObject]); //Esta funciona
     }
 
     // Reset history

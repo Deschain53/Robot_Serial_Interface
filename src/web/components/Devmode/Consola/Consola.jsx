@@ -50,9 +50,9 @@ export const Consola = ({action, history}) => {
               .map((row) => {
                 return (
                   <TableRow key = {`consoleRow-${row.id}`}>  
-                        <TableCell mode={undefined} key={`identacion-${row.id}`} align={"left"} style={{ width: 1 }}> {row.identacion}</TableCell>
-                        <TableCell mode={undefined} key={`texto-${row.id}`} align={"left"}> {row.texto}</TableCell>
-                        <TableCell mode={undefined} key={`estatus-${row.id}`} align={"left"}> {row.estatus}</TableCell>
+                        <TableCell key={`identacion-${row.id}`} align={"left"} style={{ width: 1 }}> {row.identacion}</TableCell>
+                        <TableCell key={`texto-${row.id}`} align={"left"}> {row.texto}</TableCell>
+                        <TableCell key={`estatus-${row.id}`} align={"left"}> {row.estatus}</TableCell>
                   </TableRow>
                 );
               })}
