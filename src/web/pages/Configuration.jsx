@@ -10,7 +10,7 @@ import { Container } from "@mui/material";
 
 export const Configuration = ({setConfiguration = () => {}},
   configuration= { 
-    robot: 'naab', baud: 9600, information: naab_motors_information, imgRobot: naabImg,
+    robot: 'naab', baud: 115200, information: naab_motors_information, imgRobot: naabImg,
     prefix: "posiciones,",postfix:""}, 
   ) => {
 
@@ -32,6 +32,8 @@ export const Configuration = ({setConfiguration = () => {}},
     {value: 19200,text:19200},
     {value: 28800,text:28800},
     {value: 38400,text:38400},
+    {value: 115200,text:115200},
+
   ]
 
   const getInformation = () => {
@@ -59,13 +61,13 @@ export const Configuration = ({setConfiguration = () => {}},
   }
 
   const prefixNew =  robot === "naab" ? "posiciones," : "";
-  const postfixNew =  robot === "naab" ? "[" : "";
+  const postfixNew =  robot === "naab" ? "" : "";
 
   const handleClick = () => {
     setConfiguration(
       {
         robot, 
-        baud: baud,
+        baud:  robot=='naab' ? 9600  : 115200  ,
         information: getInformation(),
         imgRobot: getImg(),
         prefix: prefixNew,

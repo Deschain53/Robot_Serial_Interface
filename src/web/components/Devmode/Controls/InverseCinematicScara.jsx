@@ -16,7 +16,7 @@ export const InverseCinematicScara = ({modifyArray}) => {
 
   const infoX = {id:1,min:-50, max:50, default:0, text:"Posición en eje X"}
   const infoY = {id:2,min:-50, max:50, default:0, text:"Posición en eje Y"}
-  const infoZ = {id:3, text:"Posición en eje Z", min: -150, max: 0, default:-150}
+  const infoZ = {id:3, text:"Posición en eje Z", min: 0, max: 50, default:0}
   
   const actionX = (id,value) => {
     //console.log(id,value)

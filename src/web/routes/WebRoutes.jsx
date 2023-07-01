@@ -19,7 +19,7 @@ let serial = new SerialObject()
 
 const defaultConfiguration = {
     robot: 'scara',
-    baud: 1200,
+    baud: 115200,
     information: scara_position_information,
     imgRobot: scaraImg,
     prefix: "",

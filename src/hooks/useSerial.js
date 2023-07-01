@@ -6,7 +6,7 @@ const historyDefault = createData('',">>","",0);
 
 
 export const useSerial = (serialObject = new SerialObject(), 
-    configuration={ robot: 'naab', baud: 9600, information: [], prefix:"", postfix:""}
+    configuration={ robot: 'scara', baud: 115200, information: [], prefix:"", postfix:""}
     ) => {
 
 //VARIABLES:  -----------------------------------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ useEffect(() => {
     // If the serial device have motors and the chip is configured correctly it will send the command to move a specific motor to a specific position
     const modifyPosition = (position = 0, newValue = 0) => {
         
-        console.log('ModifyPosition, baud: ' + serialObject.baud)
+        //console.log('ModifyPosition, baud: ' + serialObject.baud)
 
         const modify = () => {
             let psto = positions;
