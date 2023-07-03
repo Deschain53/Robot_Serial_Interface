@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import { WebLayout } from "../layout/WebLayout"
 import {naab_motors_information} from '../../data/motors/naab_motors'
 import { scara_position_information } from '../../data/motors/scara_motors';
-import scaraImg from '../../img/scara.png'
-import  naabImg  from '../../img/naab.jpg';
+import scaraImg from '../../../public/img/scara.png'    //'../../img/scara.png'
+import  naabImg  from '../../../public/img/naab.jpg';
 import { SimpleSelector } from "../../interface/Selectors/SimpleSelector";
 import { IconB } from "../components/Buttons/IconB";
 import { Container } from "@mui/material";

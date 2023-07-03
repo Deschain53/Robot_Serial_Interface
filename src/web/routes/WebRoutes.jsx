@@ -10,7 +10,7 @@ import { Instructions } from '../pages/Instructions'
 import { useSerial } from '../../hooks/useSerial';
 import { SerialObject } from '../../data/serialObject';
 import { scara_position_information } from '../../data/motors/scara_motors'
-import  scaraImg  from '../../img/scara.png';
+import  scaraImg  from  '../../../public/img/scara.png' //'../../img/scara.png';
 
 let serial = new SerialObject()
 

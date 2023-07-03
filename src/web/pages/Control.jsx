@@ -17,8 +17,9 @@ import { InverseCinematicScara } from '../components/Devmode/Controls/InverseCin
 export const Control = ({configuration={ robot: 'naab', baud: 9600, information: [], imgRobot}, 
   serialHook}) => {
 
-  const {baud, information, imgRobot, robot} = configuration;
+  const {baud, information, robot} = configuration;  //imgRobot,
 
+  const imgRobot = ""
 return (
 <>
   <WebLayout/>
