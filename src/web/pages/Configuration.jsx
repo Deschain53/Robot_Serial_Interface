@@ -18,7 +18,7 @@ export const Configuration = ({setConfiguration = () => {}},
   const [baud, setBaud] = useState(configuration.baud);
 
   const selectRobot = [
-    {value: 'naab',text:'naab'},
+    //{value: 'naab',text:'naab'},
     {value: 'scara',text:'scara'},
   ]
 

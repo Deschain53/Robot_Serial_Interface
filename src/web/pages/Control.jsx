@@ -19,7 +19,8 @@ export const Control = ({configuration={ robot: 'naab', baud: 9600, information:
 
   const {baud, information, robot} = configuration;  //imgRobot,
 
-  const imgRobot = ""
+  const imgRobot = "https://raw.githubusercontent.com/Deschain53/Robot_Serial_Interface/main/public/img/scara.png"
+  //Se podria realizar de forma dinamica
 return (
 <>
   <WebLayout/>
