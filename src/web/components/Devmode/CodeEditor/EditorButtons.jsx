@@ -26,7 +26,7 @@ export const EditorButtons = ({
     const evaluaFuncion = () => {
       try{
         console.log('Codigo escrito: ' + code)
-        //eval(code);
+        eval(code);
       }catch{
         console.log('Error en evaluacion de codigo')
       }
