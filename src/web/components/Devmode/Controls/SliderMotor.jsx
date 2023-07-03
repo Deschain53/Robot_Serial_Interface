@@ -1,3 +1,5 @@
+// Componente de barra deslizante
+// src>web>components>Devmode>Controls>SliderMotor
 import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';

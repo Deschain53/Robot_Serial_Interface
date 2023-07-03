@@ -1,3 +1,5 @@
+// Boton para subir archivo
+// src>web>components>Buttons>FileUploader
 import React from 'react';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import { IconB } from './IconB';

@@ -4,7 +4,7 @@ import { createData } from "../data/dataValidators";
 
 const historyDefault = createData('',">>","",0);
 
-
+// Se encarga de gestionar la logica de la conexion serial
 export const useSerial = (serialObject = new SerialObject(), 
     configuration={ robot: 'scara', baud: 115200, information: [], prefix:"", postfix:""}
     ) => {
@@ -42,12 +42,6 @@ useEffect(() => {
     }
 
 }, [config])
-
-//// use effect positions
-//useEffect(() => {
-//  calculaCinemáticaDirectaScara
-//}, [positions])
-
 
 // CONFIGURATION METHODS: --------------------------------------------------------------------------------------------------------
 
@@ -161,18 +155,18 @@ useEffect(() => {
         }
     }
 
-      //const calculaCinemáticaDirectaScara = () => {
-      //  const l1 = 20
-      //  const l2 = 8
-      //  const theta1 = positions[2]
-      //  const theta2 = positions[3]
-      //  const theta1F = theta1*(Math.PI/180)
-      //  const theta2F = theta2*(Math.PI/180)
-      //  const xP = Math.round( l1*Math.cos(theta1F) + l2*Math.cos(theta1F+theta2F) )
-      //  const yP = Math.round( l1*Math.sin(theta1F) + l2*Math.sin(theta1F+theta2F) )
-      //
-      //  return {xP,yP}
-      //}
+    const calculaCinemáticaDirectaScara = () => {
+      const l1 = 20
+      const l2 = 8
+      const theta1 = positions[2]
+      const theta2 = positions[3]
+      const theta1F = theta1*(Math.PI/180)
+      const theta2F = theta2*(Math.PI/180)
+      const xP = Math.round( l1*Math.cos(theta1F) + l2*Math.cos(theta1F+theta2F) )
+      const yP = Math.round( l1*Math.sin(theta1F) + l2*Math.sin(theta1F+theta2F) )
+    
+      return {xP,yP}
+    }
 
 
     return {serialHookObject:{ setConfiguration, resetConfiguration, deleteAndSetConfiguration,

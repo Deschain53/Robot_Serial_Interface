@@ -1,3 +1,4 @@
+// Ruta padre de la aplicación
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import { WebRoutes } from "../web/routes/WebRoutes";
 

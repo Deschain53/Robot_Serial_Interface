@@ -1,3 +1,5 @@
+// Consola e historial de acciones 
+// src>web>components>Devmode>Consola
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';

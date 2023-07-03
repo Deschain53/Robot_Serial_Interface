@@ -1,3 +1,5 @@
+// Barra de navegacion de interfaz
+// serc>interface>NavBar>LineMenu
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import { Box, Link } from '@mui/material';
@@ -10,9 +12,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { NavLink } from 'react-router-dom';
-//import LogoUTM from '../../img/utm1.jpg'
 import Grid from '@mui/material/Grid';
-import { Link as RouterLink} from 'react-router-dom';
 import { pages } from './pages';
 
 export const LineMenu = ({nameLogo='name logo', nameLogoSm="N L Sm"}) => {
@@ -170,8 +170,3 @@ export const LineMenu = ({nameLogo='name logo', nameLogoSm="N L Sm"}) => {
     </>
     );
   }
-
-  
-//  <Link component={RouterLink} to={page.direction}>
-//  {page.label}
-//</Link>

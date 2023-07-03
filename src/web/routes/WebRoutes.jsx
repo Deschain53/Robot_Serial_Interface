@@ -9,9 +9,7 @@ import { Instructions } from '../pages/Instructions'
 //Others:
 import { useSerial } from '../../hooks/useSerial';
 import { SerialObject } from '../../data/serialObject';
-import {naab_motors_information} from '../../data/motors/naab_motors'
 import { scara_position_information } from '../../data/motors/scara_motors'
-import  naabImg  from '../../img/naab.jpg';
 import  scaraImg  from '../../img/scara.png';
 
 let serial = new SerialObject()
@@ -24,14 +22,9 @@ const defaultConfiguration = {
     imgRobot: scaraImg,
     prefix: "",
     postfix: "",
-    //robot: 'naab',
-    //baud: 9600,
-    //information: naab_motors_information,
-    //imgRobot: naabImg,
-    //prefix: "posiciones,",
-    //postfix: "",
 }
 
+//Contiene las rutas de toda la aplicación
 export const WebRoutes = () => {
     
     const [configuration, setConfig] = useState(defaultConfiguration)
@@ -43,7 +36,6 @@ export const WebRoutes = () => {
       console.log('configuration: ', configuration)
     }, [configuration])
     
-
     return (
         <Routes>
             <Route path="/"  element={<Control configuration={configuration} serialHook={serialHookParent.serialHookObject}/>}/>

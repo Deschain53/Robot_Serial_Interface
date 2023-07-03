@@ -1,3 +1,5 @@
+// Pestaña de configuracion 
+// src> web>pages>Control
 import React, { useState } from 'react';
 import { Box, Container, Grid } from '@mui/material';
 import { WebLayout } from '../layout/WebLayout';
@@ -16,8 +18,6 @@ export const Control = ({configuration={ robot: 'naab', baud: 9600, information:
   serialHook}) => {
 
   const {baud, information, imgRobot, robot} = configuration;
-
-  //console.log(serialHook.positionsInformation)
 
 return (
 <>
@@ -71,7 +71,7 @@ return (
 
     <div className="container">
         <div className="row">
-            <Programer //serial = { serial }
+            <Programer 
               history =  {serialHook.history}  
               addToHistory =  {serialHook.addToHistory} 
               resetHistory =  {serialHook.resetHistory}

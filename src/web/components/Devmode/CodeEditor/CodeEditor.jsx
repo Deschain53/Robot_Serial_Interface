@@ -1,7 +1,8 @@
+// Maneja el texto a escribir dentro del editor
+// src>web>components>Devmode>CodeEditor
 import React from "react";
 import Editor from "@monaco-editor/react";
 
-// Maneja el texto a escribir dentro del editor
 export const CodeEditor = ({code, setCode}) => {
 
   const handleCodeChange = (e) => {
@@ -15,7 +16,7 @@ export const CodeEditor = ({code, setCode}) => {
           height="50vh" 
           language="javascript"  
           value={"" ||code}
-          onChange={(e) => handleCodeChange(e) }//(e) => setCode(e.target.value)}
+          onChange={(e) => handleCodeChange(e) }
           theme={'dark'}
           />
       </div>

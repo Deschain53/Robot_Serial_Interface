@@ -1,3 +1,5 @@
+// Seccion de programacion
+// src>web>components>Devmode>Programer
 import { useState } from "react";
 import { CodeEditor } from "./CodeEditor/CodeEditor";
 import { Consola } from "./Consola/Consola";

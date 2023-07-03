@@ -1,3 +1,5 @@
+// objeto que se invoca para realizar la conexion via serial
+// src>data>serialObject
 export class SerialObject{
 
   constructor(){
@@ -38,13 +40,8 @@ export class SerialObject{
           const reader = port.readable.getReader();
           const writer = port.writable.getWriter();
   
-            const portObject = {port, reader, writer}
-            
-            return portObject;  
-        //}
-        //catch (err) {
-        //  console.error('There was an error opening the serial port:', err);
-        //}
+          const portObject = {port, reader, writer}
+          return portObject;  
       }
       else {
         console.error('The Web serial API doesn\'t seem to be enabled in your browser.');
@@ -65,14 +62,11 @@ export class SerialObject{
 
     escribe = (data = "M1,0") => {
         try{
-          //if(this.writer.ready){
             const encoder = new TextEncoder();    
             const dataArrayBuffer = encoder.encode(data);
             console.log('serialObject > escribe : ' + data)
-            this.writer.write(dataArrayBuffer);//return
-          //}            
+            this.writer.write(dataArrayBuffer);
         }catch(e){
-          //console.log(e)
           console.log('serialObject > escribe : ','Error - Cannot read property of null')
         }
     }
@@ -81,28 +75,6 @@ export class SerialObject{
       this.escribe("M" + motor.toString() +","+value.toString())
       console.log('movido a : '+value)
     }
-    //lee = async() => {
-    //  //Escucha informacion proveniente del dispositivo
-    //  while (true) {
-    //    const { value, done } = await this.reader.read();
-    //    if (done) {
-    //      // Allow the serial port to be closed later.
-    //      //this.reader.releaseLock();
-    //      break;
-    //    }
-    //    // value is a Uint8Array.
-    //    console.log(value); 
-    //
-    //    const decoder = new TextDecoder();  
-    //    const respuesta = decoder.decode(value);  //Respuesta en texto 
-    //    console.log(respuesta);
-    //    return respuesta;
-    //  }
-    //}
-
-
-
-    //escribeA = () => {}
 
 }
 

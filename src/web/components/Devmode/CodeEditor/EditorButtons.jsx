@@ -1,5 +1,6 @@
+// Botones del editor de codigo
+// src>web>components>Devmode>CodeEditor>EditorButtons
 import React, { useState } from 'react'
-//Para logos de los botones
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import StopIcon from '@mui/icons-material/Stop';
@@ -11,7 +12,6 @@ import ReplyAllIcon from '@mui/icons-material/ReplyAll';
 import {saveAs } from "file-saver";
 import { FileUploader } from '../../Buttons/FileUploader';
 import { IconB } from '../../Buttons/IconB';
-//import { useBasicActionsNaab } from '../../../../hooks/useBasicActionsNaab';
 
 export const EditorButtons = ({
     code="", setCode = () => {}, actionCommand = () => {} , positionsInformation = [position=[0,0,0],prefix="",postfix=""]
@@ -26,7 +26,7 @@ export const EditorButtons = ({
     const evaluaFuncion = () => {
       try{
         console.log('Codigo escrito: ' + code)
-        eval(code);
+        //eval(code);
       }catch{
         console.log('Error en evaluacion de codigo')
       }
@@ -72,8 +72,3 @@ export const EditorButtons = ({
     </>
   )
 }
-
-//<div className="col"> &nbsp;&nbsp; 
-//<IconB Icon = {StopIcon} />
-//<IconB Icon = {AccessibilityIcon} action = {sendHomePosition}/>
-//</div>

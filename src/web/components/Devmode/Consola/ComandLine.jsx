@@ -1,3 +1,5 @@
+// Linea de comandos de consola
+// src>web>components>Devmode>Consola>CommandLine
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';

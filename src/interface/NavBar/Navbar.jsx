@@ -1,3 +1,5 @@
+// Navbar de la aplicacion
+// src>interface>Navbar
 import * as React from 'react';
 import { Box, Grid } from '@mui/material';
 import { LineMenu } from './LineMenu';
@@ -36,55 +38,8 @@ export const Navbar = () => {
           {nameLogo}
         </Typography>
     </Grid>
-
-     
-
       <LineMenu nameLogo={nameLogo} nameLogoSm={nameLogoSm}/>
     </Box>
     </>
   )
 }
-
-
-/*
-export const ImgNavb = ( {h="auto",w="auto"} ) => {
-
-  return (
-  <>
-      <img    src={LogoUTM}//(mode === 'dark' ? logoObs : logoClaro)} ///DESECTRUCTURAR
-              className="rounded mx-auto d-block"     
-              height = {h}
-              width = {w} 
-      />
-  </>
-  )
-}
-*/
-
-/*
-           {<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />}
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        //sx= {{alignItems: {xs:"center"}}}
-        //justifyContent="center"
-        ///Justificacion dinamica, en pantalla chica que este a la izquierda
-        //style={{ minHeight: '100vh' }}
-      >
-        <Grid item xs={6} sm={6} md={12} lg={12}> 
-
-        </Grid>
-
-        <Grid item xs={6} sm={6} md={12} lg={12}>
-        </Grid>
-      </Grid>
-
-*/
-//<ImgNavb h='100' w='100'/>
-
-//<ImageLogo
-////estilo={{with:200, height:200}}
-///>
-
-//  style={{ minLarge: '100vh' }}

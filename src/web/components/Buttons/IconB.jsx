@@ -1,14 +1,14 @@
+// Boton que incluye un icono
+// src>web>components>Buttons>IconB
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Typography } from '@mui/material';
-//import { useSelector } from 'react-redux';
 
 const defaultAction =  () => console.log('?')  ;
 
 export const IconB = ({action = defaultAction ,Icon = HelpOutlineIcon, legend = ''}) => {
 
-    //const {mode} = useSelector(state => state.conf);
     const mode = "white";
 
     return (
