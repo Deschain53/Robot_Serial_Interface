@@ -12,8 +12,8 @@ import { SerialObject } from '../../data/serialObject';
 import { scara_position_information } from '../../data/motors/scara_motors'
 import  scaraImg  from  '../../../public/img/scara.png' //'../../img/scara.png';
 
-let serial = new SerialObject()
 
+let serial = new SerialObject()
 
 const defaultConfiguration = {
     robot: 'scara',
@@ -38,11 +38,11 @@ export const WebRoutes = () => {
     
     return (
         <Routes>
-            <Route path="/"  element={<Control configuration={configuration} serialHook={serialHookParent.serialHookObject}/>}/>
-            <Route path="/control"  element={<Control configuration={configuration} serialHook={serialHookParent.serialHookObject}/>}/>
-            <Route path="/configuration"  element={<Configuration configuration={configuration} setConfiguration={setConfig} />}/>
-            <Route path="/instructions"  element={<Instructions/>}/>
-            <Route path='*' element={<Navigate to="/"/>}/>
+            <Route path="/Robot_Serial_Interface/"  element={<Control configuration={configuration} serialHook={serialHookParent.serialHookObject}/>}/>
+            <Route path="/Robot_Serial_Interface/control"  element={<Control configuration={configuration} serialHook={serialHookParent.serialHookObject}/>}/>
+            <Route path="/Robot_Serial_Interface/configuration"  element={<Configuration configuration={configuration} setConfiguration={setConfig} />}/>
+            <Route path="/Robot_Serial_Interface/instructions"  element={<Instructions/>}/>
+            <Route path='*' element={<Navigate to="/Robot_Serial_Interface"/>}/>
         </Routes>
     )
 }
